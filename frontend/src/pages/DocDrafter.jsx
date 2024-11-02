@@ -1,8 +1,8 @@
 import React from 'react'
-
+import "../styles/DocDrafter.css"
 const DocDrafter = () => {
   return (
-    <div>DocDrafter</div>
+    <div className='docdrafter'>DocDrafter</div>
   )
 }
 

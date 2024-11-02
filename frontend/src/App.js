@@ -9,7 +9,7 @@ import './App.css';
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/legalad">
       <div className="app">
         <Sidebar />
         <div className="content">

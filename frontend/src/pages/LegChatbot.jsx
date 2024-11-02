@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
+import '../styles/LegChatbot.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 
 const LegChatbot = () => {
@@ -26,7 +27,7 @@ const LegChatbot = () => {
   };
 
   return (
-    <div style={{ position: "relative", height: "100vh", width: "80vw" }}>
+    <div style={{ position: "relative", height: "100vh", width: "100%" }}>
       <MainContainer>
         <ChatContainer>       
           <MessageList

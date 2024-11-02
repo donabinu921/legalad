@@ -1,0 +1,18 @@
+.cs-message--outgoing .cs-message__content{
+    background-color: #6366f1;
+    color: #fff;
+}
+
+.cs-message-input__content-editor-wrapper{
+    background-color: #fff;
+    border: #6366f1 2px solid;
+}
+
+.cs-message-input__content-editor{
+    color: #030712;
+    background-color: #fff;
+}
+
+.cs-button--attachment,.cs-button--send{
+    color: #6366f1;
+}

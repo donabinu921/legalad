@@ -7,7 +7,14 @@
 .app {
     display: flex;
     height: 100vh;
-    justify-content: center;
-    align-items: center;
+    width: 100vw;
+    background-color: #fff;
+}
+
+.content {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    justify-items: center;
+    align-self: center;
 }
   
