@@ -1,0 +1,31 @@
+.docdrafter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.docdrafter h1{
+    color: #6366f1;
+    font-size: 1.5rem;
+    margin-bottom: 50px;
+}
+
+.docdrafter button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 5px;
+    cursor: pointer;
+    border: #fff 2px solid;
+    transition: all 0.3s ease;
+    background-color: #6366f1;
+    color: #fff;
+    margin: 20px;
+}
+
+.docdrafter button:hover {
+    color: #030712;
+    background-color: #fff;
+    border: 2px solid #6366f1;
+}

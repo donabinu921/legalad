@@ -64,3 +64,8 @@
 .toggle-button:hover {
   background-color: #030712;
 }
+
+.sidebar .tab.active {
+  background-color: #030712;
+  border-color: #6366f1;
+}

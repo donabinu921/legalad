@@ -1,11 +1,11 @@
-// src/components/Sidebar.jsx
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaFileAlt, FaFileSignature, FaRobot } from 'react-icons/fa';
 import '../styles/Sidebar.css';
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const location = useLocation();
 
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
@@ -14,19 +14,19 @@ const Sidebar = () => {
   return (
     <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
       <ul>
-        <li className='tab'>
+        <li className={`tab ${location.pathname === '/home' ? 'active' : ''}`}>
           <FaHome className='icon' />
-          {!isCollapsed && <Link to="/">Home</Link>}
+          {!isCollapsed && <Link to="/home">Home</Link>}
         </li>
-        <li className='tab'>
+        <li className={`tab ${location.pathname.startsWith('/document-drafter') ? 'active' : ''}`}>
           <FaFileAlt className='icon' />
           {!isCollapsed && <Link to="/document-drafter">Document Drafter</Link>}
         </li>
-        <li className='tab'>
+        <li className={`tab ${location.pathname.startsWith('/document-analyser') ? 'active' : ''}`}>
           <FaFileSignature className='icon' />
           {!isCollapsed && <Link to="/document-analyser">Document Analyser</Link>}
         </li>
-        <li className='tab'>
+        <li className={`tab ${location.pathname.startsWith('/legal-chatbot') ? 'active' : ''}`}>
           <FaRobot className='icon' />
           {!isCollapsed && <Link to="/legal-chatbot">Legal Chatbot</Link>}
         </li>
