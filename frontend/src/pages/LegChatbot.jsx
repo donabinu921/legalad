@@ -1,45 +1,46 @@
-import React, { useState } from 'react';
-import styles from '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-import '../styles/LegChatbot.css';
-import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
+import React, { useEffect } from "react";
+import "../styles/LegChatbot.css";
 
 const LegChatbot = () => {
-  const [typing, setTyping] = useState(false);
+  useEffect(() => {
+    // Check if the script is already loaded using a global flag
+    if (!window.__DFMessengerScriptLoaded) {
+      // Mark the script as loaded
+      window.__DFMessengerScriptLoaded = true;
 
-  const [messages, setMessages] = useState([
-    {
-      message: "Hello, I am the Legal Chatbot.",
-      sender: "bot"
+      // Dynamically add the stylesheet
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css";
+      document.head.appendChild(link);
+
+      // Load the Dialogflow Messenger script
+      const script = document.createElement("script");
+      script.src = "https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js";
+      script.async = true;
+      document.body.appendChild(script);
+
+      // Clean up the script and stylesheet when the component is unmounted
+      return () => {
+        document.body.removeChild(script);
+        document.head.removeChild(link);
+        // Optional: Reset the global flag if you want the script to load again on reload
+        // window.__DFMessengerScriptLoaded = false;
+      };
     }
-  ]);
-
-  const handleSend = async (message) => {
-    const newMessage = {
-      message: message,
-      sender: "me",
-      direction: "outgoing"
-    };
-
-    const newMessages = [...messages, newMessage];
-    setMessages(newMessages);
-    
-    setTyping(true);
-  };
+  }, []);
 
   return (
-    <div style={{ position: "relative", height: "100vh", width: "100%" }}>
-      <MainContainer>
-        <ChatContainer>       
-          <MessageList
-            typingIndicator={typing ? <TypingIndicator content="Bot is typing" /> : null}
-          >
-            {messages.map((message, i) => (
-              <Message key={i} model={message} />
-            ))}
-          </MessageList>
-          <MessageInput placeholder="Type message here" onSend={handleSend} />        
-        </ChatContainer>
-      </MainContainer>
+    <div className="legchatbot">
+      <df-messenger
+      intent="WELCOME"
+      project-id="firm-lacing-444514-j8"
+      agent-id="19179af1-baed-4997-a829-1463c636cb32"
+      language-code="en"
+      max-query-length="-1"
+    >
+      <df-messenger-chat-bubble chat-title="legalbot" />
+    </df-messenger>
     </div>
   );
 };

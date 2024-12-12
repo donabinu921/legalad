@@ -26,10 +26,10 @@ const Sidebar = () => {
           <FaFileSignature className='icon' />
           {!isCollapsed && <Link to="/document-analyser">Document Analyser</Link>}
         </li>
-        <li className={`tab ${location.pathname.startsWith('/legal-chatbot') ? 'active' : ''}`}>
+        {/* <li className={`tab ${location.pathname.startsWith('/legal-chatbot') ? 'active' : ''}`}>
           <FaRobot className='icon' />
           {!isCollapsed && <Link to="/legal-chatbot">Legal Chatbot</Link>}
-        </li>
+        </li> */}
       </ul>
 
       {/* Toggle button */}

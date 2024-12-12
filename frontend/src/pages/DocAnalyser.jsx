@@ -24,8 +24,8 @@ const DocAnalyser = () => {
   return (
     <div className='docanalyser'>
       <form onSubmit={handleSubmit}>
-        <label>UPLOAD THE DOCUMENT:</label>
-        <input type="file" name="document" accept=".pdf" onChange={handleFileChange}/>
+        <label htmlFor="document">UPLOAD THE DOCUMENT:</label>
+        <input type="file" name="document" id='document' accept=".pdf" onChange={handleFileChange}/>
         <button type="submit">Analyse</button>
       </form>
       {fileURL && (

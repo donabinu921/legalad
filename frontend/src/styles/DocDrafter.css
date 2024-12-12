@@ -6,7 +6,7 @@
 }
 
 .docdrafter h1{
-    color: #6366f1;
+    color: #0B57D0;
     font-size: 1.5rem;
     margin-bottom: 50px;
 }
@@ -19,7 +19,7 @@
     cursor: pointer;
     border: #fff 2px solid;
     transition: all 0.3s ease;
-    background-color: #6366f1;
+    background-color: #0B57D0;
     color: #fff;
     margin: 20px;
 }
@@ -27,5 +27,5 @@
 .docdrafter button:hover {
     color: #030712;
     background-color: #fff;
-    border: 2px solid #6366f1;
+    border: 2px solid #0B57D0;
 }

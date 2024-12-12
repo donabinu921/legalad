@@ -1,18 +1,14 @@
-.cs-message--outgoing .cs-message__content{
-    background-color: #6366f1;
-    color: #fff;
-}
 
-.cs-message-input__content-editor-wrapper{
-    background-color: #fff;
-    border: #6366f1 2px solid;
-}
-
-.cs-message-input__content-editor{
-    color: #030712;
-    background-color: #fff;
-}
-
-.cs-button--attachment,.cs-button--send{
-    color: #6366f1;
+df-messenger {
+  z-index: 9999;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  --df-messenger-chat-window-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  --df-messenger-chat-window-width: 400px;
+  --df-messenger-font-color: #333;
+  --df-messenger-font-family: Arial, sans-serif;
+  --df-messenger-chat-background: #ffffff;
+  --df-messenger-message-user-background: #d3e3fd;
+  --df-messenger-message-bot-background: #f3f6fc;
 }

@@ -5,7 +5,7 @@
 }
 
 .docanalyser form {
-    background-color: #6366f1;
+    background-color: #0B57D0;
     border-radius: 8px;
     padding: 60px 30px;
     display: flex;
@@ -39,7 +39,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     border: #fff 1px solid;
-    background-color: #6366f1;
+    background-color: #0B57D0;
     color: #fff;
 }
 

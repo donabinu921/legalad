@@ -1,5 +1,6 @@
 .sidebar {
-  background-color: #030712;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 100vh;
   min-width: 250px; /* Expanded width */
   border: transparent;
@@ -17,11 +18,11 @@
 
 .sidebar .tab {
   list-style: none;
-  background-color: #6366f1;
-  border: 2px solid #030712;
+  background-color: #0B57D0;
+  border: 2px solid #fff;
   border-radius: 4px;
   padding: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: flex; /* Use flexbox */
   justify-content: flex-start; /* Left-align icons and text when expanded */
   align-items: center; /* Center items vertically */
@@ -50,9 +51,9 @@
 
 /* Toggle button at the bottom */
 .toggle-button {
-  background-color: #6366f1;
+  background-color: #0B57D0;
   color: #fff;
-  border: 1px solid #6366f1;
+  border: 1px solid #0B57D0;
   text-align: center;
   padding: 10px;
   cursor: pointer;
@@ -61,11 +62,19 @@
   font-size: 18px;
 }
 
-.toggle-button:hover {
-  background-color: #030712;
+.sidebar .tab:hover {
+  transform: scale(1.01);
 }
 
 .sidebar .tab.active {
-  background-color: #030712;
-  border-color: #6366f1;
+  background-color: #fff;
+  border-color: #0B57D0;
+}
+
+.sidebar .tab.active a {
+  color: #0B57D0;
+}
+
+.sidebar .tab.active .icon {
+  color: #0B57D0;
 }
