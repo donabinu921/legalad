@@ -9,6 +9,7 @@ const Sidebar = () => {
 
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
+    document.querySelector('.content').classList.toggle('collapsed', !isCollapsed);
   };
 
   return (
