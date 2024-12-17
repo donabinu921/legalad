@@ -23,11 +23,3 @@
     padding: 20px;
     box-sizing: border-box;
 }
-  
-.content.collapsed {
-    margin-left: 80px; /* Adjust to match the collapsed sidebar width */
-  }
-  
-  .content:not(.collapsed) {
-    margin-left: 250px; /* Adjust to match the expanded sidebar width */
-  }

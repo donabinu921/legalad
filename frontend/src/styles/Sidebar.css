@@ -1,8 +1,4 @@
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 100vh;
@@ -28,24 +24,34 @@
   padding: 10px;
   margin-bottom: 10px;
   display: flex; /* Use flexbox */
-  justify-content: flex-start; /* Left-align icons and text when expanded */
   align-items: center; /* Center items vertically */
+  justify-content: flex-start; /* Default: Left-align when expanded */
   transition: opacity 0.3s ease;
 }
 
 .sidebar.collapsed .tab {
-  justify-content: center; /* Center icons when collapsed */
-}
-
-.sidebar.collapsed .tab a {
-  display: none; /* Hide text when collapsed */
+  justify-content: center; /* Center icons horizontally when collapsed */
 }
 
 .sidebar .tab a {
   text-decoration: none;
   color: #fff;
   font-weight: 500;
+  display: flex; /* Make the link a flex container */
+  align-items: center; /* Center items vertically */
+  width: 100%; /* Make the link take the full width of the tab */
+}
+
+.sidebar .tab a span {
   margin-left: 10px; /* Space between icon and text */
+}
+
+.sidebar.collapsed .tab a {
+  justify-content: center; /* Center the icon content when collapsed */
+}
+
+.sidebar.collapsed .tab a span {
+  display: none; /* Hide text when collapsed */
 }
 
 .icon {
@@ -53,7 +59,21 @@
   font-size: 1.5em;
 }
 
-/* Toggle button at the bottom */
+.logtoggle{
+  display: flex;
+  flex-direction: column;
+}
+
+.logout-button{
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #0B57D0;
+  color: #fff;
+  border: 1px solid #0B57D0;
+}
+
 .toggle-button {
   background-color: #0B57D0;
   color: #fff;
