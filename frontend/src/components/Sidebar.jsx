@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaHome, FaFileAlt, FaFileSignature, FaSignOutAlt, FaChevronLeft, FaChevronRight} from 'react-icons/fa';
 import '../styles/Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ( {onLogout} ) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate()
@@ -14,7 +14,10 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    navigate('/document-drafter');
+    localStorage.removeItem('token');
+  console.log('Token removed:', localStorage.getItem('token')); // Should be null
+  onLogout();
+  navigate('/auth');
   };
 
   return (
