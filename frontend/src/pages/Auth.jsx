@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Auth.css';
 
 const Auth = ({ onAuthSuccess }) => {  
@@ -20,17 +22,19 @@ const Auth = ({ onAuthSuccess }) => {
     const url = isLogin ? 'http://localhost:5000/api/login' : 'http://localhost:5000/api/signup';
     try {
       const response = await axios.post(url, formData);
-      alert(`Success: ${response.data.message}`);
-      onAuthSuccess();
+      toast.success(`${response.data.message}, Logging you in...`);
+      setTimeout(() => {
+        onAuthSuccess(); // Redirect or perform your action
+      }, 1000); // Delay for 1 seconds
       // Add JWT handling and redirection here
     } catch (error) {
       if (error.response) {
         // Server responded with a status other than 2xx
-        alert(`Error: ${error.response.data.error}`);
+        toast.error(`Error: ${error.response.data.error}`);
       } else {
         // Other errors (e.g., network errors)
         console.error('Error:', error.message);
-        alert('An error occurred. Please try again.');
+        toast.error('An error occurred. Please try again.');
       }
     }
   };
@@ -40,24 +44,24 @@ const Auth = ({ onAuthSuccess }) => {
       <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
             name="username"
             value={formData.username}
             onChange={handleChange}
+            placeholder='Username'
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
+            placeholder='Password'
             required
           />
         </div>
@@ -68,6 +72,17 @@ const Auth = ({ onAuthSuccess }) => {
       <p className="toggle-link" onClick={toggleAuthMode}>
         {isLogin ? 'Don\'t have an account? Sign Up' : 'Already have an account? Login'}
       </p>
+      <ToastContainer 
+        position="top-right" 
+        autoClose={5000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick 
+        rtl={false} 
+        pauseOnFocusLoss 
+        draggable 
+        pauseOnHover 
+      />
     </div>
   );
 };
