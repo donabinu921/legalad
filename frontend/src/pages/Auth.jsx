@@ -22,22 +22,28 @@ const Auth = ({ onAuthSuccess }) => {
     const url = isLogin ? 'http://localhost:5000/api/login' : 'http://localhost:5000/api/signup';
     try {
       const response = await axios.post(url, formData);
-      toast.success(`${response.data.message}, Logging you in...`);
+      const { message, token } = response.data; // Destructure token and message
+  
+      if (isLogin) {
+        localStorage.setItem('token', token); // Store token in localStorage
+        toast.success(`${message}, Logging you in...`);
+      } else {
+        toast.success(`${message}, You can now log in!`);
+      }
+  
       setTimeout(() => {
         onAuthSuccess(); // Redirect or perform your action
-      }, 1000); // Delay for 1 seconds
-      // Add JWT handling and redirection here
+      }, 1000); // Delay for 1 second
     } catch (error) {
       if (error.response) {
-        // Server responded with a status other than 2xx
         toast.error(`Error: ${error.response.data.error}`);
       } else {
-        // Other errors (e.g., network errors)
         console.error('Error:', error.message);
         toast.error('An error occurred. Please try again.');
       }
     }
   };
+  
 
   return (
     <div className="auth-container">

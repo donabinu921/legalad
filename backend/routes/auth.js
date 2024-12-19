@@ -2,10 +2,11 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const authenticateToken = require('../middleware/authenticateToken');
 
 const router = express.Router();
 
-// Signup route
+// Signup route, no jwt needed
 router.post('/signup', async (req, res) => {
   const { username, password } = req.body;
   try {
