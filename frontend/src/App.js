@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import DocDrafter from './pages/DocDrafter';
 import DocAnalyser from './pages/DocAnalyser';
 import LegChatbot from './pages/LegChatbot';
+import Will from './components/Will';
 import Auth from './pages/Auth'; // Login/Signup component
 import './App.css';
 
@@ -38,6 +39,7 @@ const App = () => {
                 <Route path="/document-drafter" element={<DocDrafter />} />
                 <Route path="/document-analyser" element={<DocAnalyser />} />
                 <Route path="*" element={<Navigate to="/home" />} />
+                <Route path="/will" element={<Will />} />
               </>
             )}
           </Routes>
