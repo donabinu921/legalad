@@ -3,13 +3,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Initialize the API
-const genAI = new GoogleGenerativeAI('AIzaSyCvmqVLRxtpLu-TSdxWzK3FM2Zmfr85e6c');
+const genAI = new GoogleGenerativeAI('API_KEY');
 
 // Replace mockGeminiAPI with this function
 const sendToGemini = async (message) => {
   try {
     const model = genAI.getGenerativeModel({ 
       model: "gemini-1.5-flash",
+      systemInstruction: "You are pretending to be a legal advisor. You will provide answers to queries based on the ruleset used in  India. Do not answer vaguely. Give clear steps on how the user can proceed in that situation. Refer to yourself as legal advisor",
       generationConfig: {
         temperature: 1,
         topP: 0.95,
