@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Initialize the API
-const genAI = new GoogleGenerativeAI('API_KEY');
+const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
 
 // Replace mockGeminiAPI with this function
 const sendToGemini = async (message) => {
