@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import mammoth from 'mammoth';
+import "../styles/DocAnalyser.css";
 
 // Initialize the Google Generative AI
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
@@ -177,7 +178,7 @@ const DocAnalyser = () => {
         <div className="mb-4">
           <label 
             htmlFor="document" 
-            className="block text-lg font-medium mb-2"
+            className="block text-2xl text-blue-600 font-bold mb-2"
           >
             Upload Document:
           </label>
@@ -211,7 +212,7 @@ const DocAnalyser = () => {
       {fileURL && (
         <div className="grid grid-cols-1 gap-4">
           <div className="border rounded p-4">
-            <h3 className="text-xl font-medium mb-3">Uploaded Document</h3>
+            <h3 className="text-xl font-medium mb-3  text-blue-600">Uploaded Document</h3>
             <iframe
               src={fileURL}
               className="w-full h-96 border"
@@ -221,7 +222,7 @@ const DocAnalyser = () => {
           
           {extractedText && (
             <div className="border rounded p-4">
-              <h3 className="text-xl font-medium mb-3">Extracted Text</h3>
+              <h3 className="text-xl font-medium mb-3  text-blue-600">Extracted Text</h3>
               <div className="prose max-w-none whitespace-pre-wrap">
                 {extractedText}
               </div>
@@ -229,7 +230,7 @@ const DocAnalyser = () => {
           )}
           
           <div className="border rounded p-4">
-            <h3 className="text-xl font-medium mb-3">Analysis Results</h3>
+            <h3 className="text-xl font-medium mb-3 text-blue-600">Analysis Results</h3>
             <div className="prose max-w-none">
               {loading ? (
                 <div className="flex items-center justify-center h-32">

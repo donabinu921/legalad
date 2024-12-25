@@ -1,54 +1,91 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaHome, FaFileAlt, FaFileSignature, FaSignOutAlt, FaChevronLeft, FaChevronRight} from 'react-icons/fa';
-import '../styles/Sidebar.css';
+import { FaHome, FaFileAlt, FaFileSignature, FaRobot, FaSignOutAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const Sidebar = ( {onLogout} ) => {
+const Sidebar = ({ onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
-    document.querySelector('.content').classList.toggle('collapsed', !isCollapsed);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-  console.log('Token removed:', localStorage.getItem('token')); // Should be null
-  onLogout();
-  navigate('/auth');
+    console.log('Token removed:', localStorage.getItem('token')); // Should be null
+    onLogout();
+    navigate('/auth');
   };
 
   return (
-    <div className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
-      <ul>
-        <li className={`tab ${location.pathname === '/home' ? 'active' : ''}`}>
-          <Link to="/home">
-            <FaHome className='icon' />
-            {!isCollapsed && <span>Home</span>}
-          </Link>
-        </li>
-        <li className={`tab ${location.pathname.startsWith('/document-drafter') ? 'active' : ''}`}>
-          <Link to="/document-drafter">
-            <FaFileAlt className='icon' />
-            {!isCollapsed && <span>Document Drafter</span>}
-          </Link>
-        </li>
-        <li className={`tab ${location.pathname.startsWith('/document-analyser') ? 'active' : ''}`}>
-          <Link to="/document-analyser">
-            <FaFileSignature className='icon' />
-            {!isCollapsed && <span>Document Analyser</span>}
-          </Link>
-        </li>      
+    <div
+      className={`flex flex-col h-screen bg-white shadow-md transition-all duration-300 ease-in-out`}
+      style={{ minWidth: '80px' }} // Ensures minimum size for collapsed state
+    >
+      <ul className="flex-grow space-y-2 p-3">
+        {[
+          { path: '/home', label: 'Home', icon: <FaHome /> },
+          { path: '/document-drafter', label: 'Document Drafter', icon: <FaFileAlt /> },
+          { path: '/document-analyser', label: 'Document Analyser', icon: <FaFileSignature /> },
+          { path: '/chatbot', label: 'Legal Chatbot', icon: <FaRobot /> },
+        ].map((tab) => (
+          <li
+            key={tab.path}
+            className={`flex items-center p-3 rounded-md ${
+              location.pathname.startsWith(tab.path)
+                ? 'bg-blue-500 text-white'
+                : 'bg-blue-100 text-blue-500'
+            }`}
+          >
+            <Link to={tab.path} className="flex items-center w-full">
+              <div className="text-xl flex items-center justify-center w-12">
+                {tab.icon}
+              </div>
+              <span
+                className={`transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}
+                style={{
+                  visibility: isCollapsed ? 'hidden' : 'visible',
+                  transition: 'opacity 0.3s, visibility 0.3s', // Ensure smooth fade and visibility
+                }}
+              >
+                {!isCollapsed && <span className="ml-3 font-medium">{tab.label}</span>}
+              </span>
+            </Link>
+          </li>
+        ))}
       </ul>
-      <div className='logtoggle'>
-      <button className="logout-button" onClick={handleLogout}>
-            <FaSignOutAlt className='icon' />
-      </button>
-      <button className="toggle-button" onClick={handleToggle}>
-        {isCollapsed ? <FaChevronRight/> : <FaChevronLeft/>}
-      </button>
+      <div className="flex flex-col items-center p-3 space-y-2">
+        <button
+          className="flex items-center justify-center w-full p-3 rounded-md bg-blue-100 text-blue-500"
+          onClick={handleLogout}
+        >
+          <FaSignOutAlt className="text-xl" />
+          <span
+            className={`transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}
+            style={{
+              visibility: isCollapsed ? 'hidden' : 'visible',
+              transition: 'opacity 0.3s, visibility 0.3s',
+            }}
+          >
+            {!isCollapsed && <span className="ml-3 font-medium">Logout</span>}
+          </span>
+        </button>
+        <button
+          className="flex items-center justify-center w-full p-3 rounded-md bg-blue-100 text-blue-500"
+          onClick={handleToggle}
+        >
+          {isCollapsed ? <FaChevronRight className="text-xl" /> : <FaChevronLeft className="text-xl" />}
+          <span
+            className={`transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0' : 'opacity-100'}`}
+            style={{
+              visibility: isCollapsed ? 'hidden' : 'visible',
+              transition: 'opacity 0.3s, visibility 0.3s',
+            }}
+          >
+            {!isCollapsed && <span className="ml-3 font-medium">Collapse</span>}
+          </span>
+        </button>
       </div>
     </div>
   );

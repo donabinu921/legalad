@@ -38,12 +38,12 @@ const App = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/document-drafter" element={<DocDrafter />} />
                 <Route path="/document-analyser" element={<DocAnalyser />} />
+                <Route path="/chatbot" element={<LegChatbot />} />
                 <Route path="*" element={<Navigate to="/home" />} />
                 <Route path="/will" element={<Will />} />
               </>
             )}
           </Routes>
-          {isAuthenticated && <LegChatbot />}
         </div>
       </div>
     </Router>

@@ -33,7 +33,7 @@ const sendToGemini = async (message) => {
   }
 };
 
-const LegalAdvisorChatbot = () => {
+const LegChatbot = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -73,9 +73,9 @@ const LegalAdvisorChatbot = () => {
 
   return (
     <div className="chat-container" style={{
-      maxWidth: '800px',
+      minWidth: '100%',
       margin: '0 auto',
-      height: '600px',
+      minHeight: '90vh',
       border: '1px solid #ddd',
       borderRadius: '8px',
       display: 'flex',
@@ -87,7 +87,8 @@ const LegalAdvisorChatbot = () => {
         borderBottom: '1px solid #ddd',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: '1.25rem'
+        fontSize: '1.25rem',
+        color: '#0B57D0'
       }}>
         Legal Advisor Chat
       </div>
@@ -125,7 +126,7 @@ const LegalAdvisorChatbot = () => {
             <div style={{
               fontWeight: '600',
               marginBottom: '0.5rem',
-              color: '#059669'
+              color: '#0B57D0'
             }}>
               Legal Advisor:
             </div>
@@ -181,4 +182,4 @@ const LegalAdvisorChatbot = () => {
   );
 };
 
-export default LegalAdvisorChatbot;
+export default LegChatbot;
