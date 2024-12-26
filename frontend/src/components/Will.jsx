@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Will = () => {
     const navigate = useNavigate();
@@ -54,11 +55,20 @@ const Will = () => {
         setFormData({ ...formData, specificBequests: updatedBequests });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Will Form Data:', formData);
-        // Process form data or send it to the backend
-    };
+        try {
+            const response = await axios.post('http://localhost:5000/api/will', formData);
+            toast.success('Will saved successfully!');
+            console.log('Saved Will:', response.data);
+            setTimeout(() => {
+                navigate('/document-drafter');
+            }, 1000);
+        } catch (error) {
+            toast.error('Failed to save the will.');
+            console.error('Error:', error);
+        }
+    };    
 
     return (
         <div className="max-w-3xl mx-auto">
