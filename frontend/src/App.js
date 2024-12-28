@@ -6,7 +6,7 @@ import DocDrafter from './pages/DocDrafter';
 import DocAnalyser from './pages/DocAnalyser';
 import LegChatbot from './pages/LegChatbot';
 import Will from './components/Will';
-import Auth from './pages/Auth'; // Login/Signup component
+import Auth from './pages/Auth';
 import './App.css';
 
 const App = () => {
