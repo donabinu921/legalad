@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import mammoth from 'mammoth';
+import React, { useState, useEffect } from "react";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import mammoth from "mammoth";
 import "../styles/DocAnalyser.css";
+import FormattedText from "../components/FormattedText";
 
 // Initialize the Google Generative AI
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
 
 // Initialize PDF.js
 const initPDFJS = async () => {
-  const pdfjs = await import('pdfjs-dist/webpack');
+  const pdfjs = await import("pdfjs-dist/webpack");
   // Using CDN for the worker
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
   return pdfjs;
@@ -17,10 +18,10 @@ const initPDFJS = async () => {
 const DocAnalyser = () => {
   const [file, setFile] = useState(null);
   const [fileURL, setFileURL] = useState(null);
-  const [analysisResult, setAnalysisResult] = useState('');
+  const [analysisResult, setAnalysisResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [extractedText, setExtractedText] = useState('');
+  const [extractedText, setExtractedText] = useState("");
   const [pdfjs, setPdfjs] = useState(null);
 
   useEffect(() => {
@@ -31,26 +32,24 @@ const DocAnalyser = () => {
   // Function to extract text from PDF
   const extractPDFText = async (arrayBuffer) => {
     if (!pdfjs) {
-      throw new Error('PDF.js not initialized');
+      throw new Error("PDF.js not initialized");
     }
 
     try {
       const pdf = await pdfjs.getDocument(arrayBuffer).promise;
-      let fullText = '';
+      let fullText = "";
 
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
-        const pageText = textContent.items
-          .map(item => item.str)
-          .join(' ');
-        fullText += pageText + '\n';
+        const pageText = textContent.items.map((item) => item.str).join(" ");
+        fullText += pageText + "\n";
       }
 
       return fullText;
     } catch (error) {
-      console.error('PDF extraction error:', error);
-      throw new Error('Failed to extract text from PDF');
+      console.error("PDF extraction error:", error);
+      throw new Error("Failed to extract text from PDF");
     }
   };
 
@@ -60,8 +59,8 @@ const DocAnalyser = () => {
       const result = await mammoth.extractRawText({ arrayBuffer });
       return result.value;
     } catch (error) {
-      console.error('DOCX extraction error:', error);
-      throw new Error('Failed to extract text from DOCX');
+      console.error("DOCX extraction error:", error);
+      throw new Error("Failed to extract text from DOCX");
     }
   };
 
@@ -69,7 +68,7 @@ const DocAnalyser = () => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
       reader.readAsArrayBuffer(file);
     });
   };
@@ -78,7 +77,7 @@ const DocAnalyser = () => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
       reader.readAsText(file);
     });
   };
@@ -86,16 +85,16 @@ const DocAnalyser = () => {
   const extractFileContent = async (file) => {
     try {
       const arrayBuffer = await readFileAsArrayBuffer(file);
-      let text = '';
+      let text = "";
 
       switch (file.type) {
-        case 'application/pdf':
+        case "application/pdf":
           text = await extractPDFText(arrayBuffer);
           break;
-        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
           text = await extractDOCXText(arrayBuffer);
           break;
-        case 'text/plain':
+        case "text/plain":
           text = await readFileAsText(file);
           break;
         default:
@@ -103,12 +102,12 @@ const DocAnalyser = () => {
       }
 
       if (!text || text.trim().length === 0) {
-        throw new Error('No text content could be extracted from the file');
+        throw new Error("No text content could be extracted from the file");
       }
 
       return text;
     } catch (error) {
-      console.error('Content extraction error:', error);
+      console.error("Content extraction error:", error);
       throw error;
     }
   };
@@ -119,15 +118,15 @@ const DocAnalyser = () => {
       setFile(selectedFile);
       setFileURL(URL.createObjectURL(selectedFile));
       setError(null);
-      setAnalysisResult('');
-      setExtractedText('');
+      setAnalysisResult("");
+      setExtractedText("");
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!file) {
-      setError('Please select a file first');
+      setError("Please select a file first");
       return;
     }
 
@@ -145,7 +144,7 @@ const DocAnalyser = () => {
           topP: 0.8,
           topK: 40,
           maxOutputTokens: 8192,
-        }
+        },
       });
 
       const chat = model.startChat({
@@ -162,10 +161,10 @@ const DocAnalyser = () => {
       ${fileContent}`;
 
       const result = await chat.sendMessage(prompt);
+      console.log(result.response.text());
       setAnalysisResult(result.response.text());
-
     } catch (error) {
-      console.error('Error analyzing document:', error);
+      console.error("Error analyzing document:", error);
       setError(`Failed to analyze the document: ${error.message}`);
     } finally {
       setLoading(false);
@@ -176,8 +175,8 @@ const DocAnalyser = () => {
     <div className="w-full max-w-4xl mx-auto p-4">
       <form onSubmit={handleSubmit} className="mb-6">
         <div className="mb-4">
-          <label 
-            htmlFor="document" 
+          <label
+            htmlFor="document"
             className="block text-2xl text-blue-600 font-bold mb-2"
           >
             Upload Document:
@@ -194,51 +193,52 @@ const DocAnalyser = () => {
             Supported formats: PDF, DOCX, TXT
           </p>
         </div>
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           disabled={loading || !file}
           className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-300"
         >
-          {loading ? 'Analyzing...' : 'Analyze Document'}
+          {loading ? "Analyzing..." : "Analyze Document"}
         </button>
       </form>
 
       {error && (
-        <div className="text-red-500 mb-4 p-3 bg-red-50 rounded">
-          {error}
-        </div>
+        <div className="text-red-500 mb-4 p-3 bg-red-50 rounded">{error}</div>
       )}
 
       {fileURL && (
         <div className="grid grid-cols-1 gap-4">
           <div className="border rounded p-4">
-            <h3 className="text-xl font-medium mb-3  text-blue-600">Uploaded Document</h3>
+            <h3 className="text-xl font-medium mb-3  text-blue-600">
+              Uploaded Document
+            </h3>
             <iframe
               src={fileURL}
               className="w-full h-96 border"
               title="Uploaded Document"
             />
           </div>
-          
-          {extractedText && (
+
+          {/* {extractedText && (
             <div className="border rounded p-4">
               <h3 className="text-xl font-medium mb-3  text-blue-600">Extracted Text</h3>
               <div className="prose max-w-none whitespace-pre-wrap">
                 {extractedText}
               </div>
             </div>
-          )}
-          
+          )} */}
+
           <div className="border rounded p-4">
-            <h3 className="text-xl font-medium mb-3 text-blue-600">Analysis Results</h3>
+            <h3 className="text-xl font-medium mb-3 text-blue-600">
+              Analysis Results
+            </h3>
             <div className="prose max-w-none">
               {loading ? (
                 <div className="flex items-center justify-center h-32">
                   <p>Analyzing document...</p>
                 </div>
-              ) : (
-                analysisResult || 'Analysis results will appear here after processing.'
-              )}
+              ) : (<FormattedText text = {analysisResult}/>) || "Analysis results will appear here after processing."
+              }
             </div>
           </div>
         </div>

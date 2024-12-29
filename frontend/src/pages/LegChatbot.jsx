@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import FormattedText from '../components/FormattedText';
 
 // Initialize the API
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
@@ -118,6 +119,7 @@ const LegChatbot = () => {
               whiteSpace: 'pre-wrap'
             }}>
               {message.content}
+              {/* <FormattedText text={message.content} /> */}
             </div>
           </div>
         ))}
