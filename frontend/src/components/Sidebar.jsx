@@ -21,7 +21,7 @@ const Sidebar = ({ onLogout }) => {
   return (
     <div
       className={`flex flex-col h-screen bg-white shadow-md transition-all duration-300 ease-in-out`}
-      style={{ minWidth: '80px' }} // Ensures minimum size for collapsed state
+      style={{ minWidth: isCollapsed ? '80px' : '300px' }} // Ensures minimum size for collapsed state
     >
       <ul className="flex-grow space-y-2 p-3">
         {[
