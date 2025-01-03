@@ -241,7 +241,13 @@ Not Applicable (all children are adults).
 
     12. Other Instructions*
 - Funeral Preference: Simple ceremony at the local crematorium.  
-- Charitable Donation: ₹50,000 to be donated to an orphanage in Delhi.`
+- Charitable Donation: ₹50,000 to be donated to an orphanage in Delhi.
+
+
+Return the text in proper format and alignment
+
+
+`
       );
       setResponse(result);
       console.log(result);
@@ -257,7 +263,7 @@ Not Applicable (all children are adults).
         <div className="max-w-4xl mx-auto px-4 py-8">
             <h1 className="text-center text-blue-600 text-3xl font-bold mb-12">Draft Your Will</h1>
 
-            <div className="mb-8 p-4 bg-gray-50 rounded">
+            {/* <div className="mb-8 p-4 bg-gray-50 rounded">
                 <div className="flex items-center mb-2">
                     <input
                         type="checkbox"
@@ -291,11 +297,11 @@ Not Applicable (all children are adults).
                         {`This will be dated ${new Date().toLocaleDateString()}.`}
                     </label>
                 </div>
-            </div>
+            </div> */}
 
             <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Testator Details */}
-                <div className="mb-8">
+                Testator Details
+                {/* <div className="mb-8">
                     <h2 className="text-blue-600 text-xl font-medium mb-4">1. Testator Details</h2>
                     <input
                         type="text"
@@ -332,10 +338,10 @@ Not Applicable (all children are adults).
                         required
                         className="border p-2 rounded mb-4 w-full"
                     />
-                </div>
+                </div> */}
 
                 {/* Marital Status */}
-                <div className="mb-8">
+                {/* <div className="mb-8">
                     <h2 className="text-blue-600 text-xl font-medium mb-4">2. Marital Status</h2>
                     <select
                         name="maritalStatus"
@@ -359,10 +365,10 @@ Not Applicable (all children are adults).
                             className="border p-2 rounded mb-4 w-full"
                         />
                     )}
-                </div>
+                </div> */}
 
                 {/* Children */}
-                <div className="mb-8">
+                {/* <div className="mb-8">
                     <h2 className="text-blue-600 text-xl font-medium mb-4">3. Children</h2>
                     <select
                         name="hasChildren"
@@ -411,10 +417,10 @@ Not Applicable (all children are adults).
                             </button>
                         </>
                     )}
-                </div>
+                </div> */}
 
                 {/* Family Details */}
-                <div className="mb-8">
+                {/* <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">4. Family Details</h2>
                 <h3 className="font-medium mb-2">Parents</h3>
                 <input
@@ -482,10 +488,10 @@ Not Applicable (all children are adults).
                         </button>
                     </>
                 )}
-            </div>
+            </div> */}
 
             {/* Executor Details */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">5. Executor Details</h2>
                 <div className="mb-4">
                     <h3 className="font-medium mb-2">Primary Executor</h3>
@@ -528,10 +534,10 @@ Not Applicable (all children are adults).
                         className="border p-2 rounded mb-4 w-full"
                     />
                 </div>
-            </div>
+            </div> */}
 
             {/* Beneficiaries and Bequests */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">6. Beneficiaries and Bequests</h2>
                 <h3 className="font-medium mb-2">Beneficiaries</h3>
                 {formData.beneficiaries.map((beneficiary, index) => (
@@ -610,10 +616,10 @@ Not Applicable (all children are adults).
                 >
                     Add Specific Bequest
                 </button>
-            </div>
+            </div> */}
 
             {/* Debts */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">8. Debts</h2>
                 {formData.debts.map((debt, index) => (
                     <div key={index} className="flex items-center gap-4 mb-4">
@@ -654,9 +660,9 @@ Not Applicable (all children are adults).
                 >
                     Add Debt
                 </button>
-            </div>
+            </div> */}
             {/* Guardianship */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">9. Guardianship</h2>
                 <textarea
                     name="guardianshipDetails"
@@ -665,10 +671,10 @@ Not Applicable (all children are adults).
                     onChange={handleChange}
                     className="border p-2 rounded w-full h-32"
                 />
-            </div>
+            </div> */}
 
             {/* Witnesses */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">10. Witnesses</h2>
                 {formData.witnesses.map((witness, index) => (
                     <div key={index} className="flex items-center gap-4 mb-4">
@@ -704,10 +710,10 @@ Not Applicable (all children are adults).
                 >
                     Add Witness
                 </button>
-            </div>
+            </div> */}
 
             {/* Other Instructions */}
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">11. Other Instructions</h2>
                 
                 <h3 className="font-medium mb-2">Funeral Preferences</h3>
@@ -752,7 +758,7 @@ Not Applicable (all children are adults).
                 >
                     Add Charitable Donation
                 </button>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <div className="mt-12 text-center">
@@ -764,6 +770,18 @@ Not Applicable (all children are adults).
                 </button>
             </div>
             </form>
+
+            <div>
+            {response && (
+                <div className="mt-8">
+                    <h2 className="text-blue-600 text-xl font-medium mb-4">Generated Will</h2>
+                    <textarea
+                        value={response}
+                        className="border p-4 rounded w-full h-96"
+                    />
+                </div>
+            )}
+            </div>
         </div>
     );
 };
