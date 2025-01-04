@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { jsPDF} from "jspdf";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
 
@@ -34,12 +35,8 @@ const sendToGemini = async (message) => {
 };
 
 const Will = () => {
-    const navigate = useNavigate();
-    const [pdfUrl, setPdfUrl] = useState("");
-    const [text, setText] = useState("");
-    const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState("");
-    const [textFile, setTextFile] = useState(null);
+    const [textAreaValue, setTextAreaValue] = useState("");
     const [formData, setFormData] = useState({
         testatorName: '',
         testatorAddress: '',
@@ -83,6 +80,41 @@ const Will = () => {
         charitableDonations: [{ organization: '', amount: '' }],
     });
 
+    useEffect(() => {
+        if (response) {
+            setTextAreaValue(response);
+            toast.success("Will generated successfully!");
+        }
+    }, [response]);
+
+    const handleTextAreaChange = (e) => {
+        setTextAreaValue(e.target.value);
+    };
+
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        doc.setFontSize(10);
+        const pageHeight = doc.internal.pageSize.height;
+        const margin = 10;
+        const maxLineHeight = pageHeight - margin * 2;
+        let y = margin;
+
+        const lines = doc.splitTextToSize(textAreaValue, 180); // Split text into lines that fit within 180 units width
+
+        lines.forEach((line) => {
+            if (y + 10 > maxLineHeight) {
+                doc.addPage();
+                y = margin;
+            }
+            doc.text(line, margin, y);
+            y += 10;
+        });
+
+        const pdfBlob = doc.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        window.open(pdfUrl);
+    };
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -120,6 +152,7 @@ const Will = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    toast.info("Generating will...");
     try {
       const result = await sendToGemini(
        `
@@ -260,10 +293,11 @@ Return the text in proper format and alignment
 
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="w-full mx-auto px-4 py-8">
+            <ToastContainer />
             <h1 className="text-center text-blue-600 text-3xl font-bold mb-12">Draft Your Will</h1>
 
-            {/* <div className="mb-8 p-4 bg-gray-50 rounded">
+            { <div className="mb-8 p-4 bg-gray-50 rounded">
                 <div className="flex items-center mb-2">
                     <input
                         type="checkbox"
@@ -297,11 +331,11 @@ Return the text in proper format and alignment
                         {`This will be dated ${new Date().toLocaleDateString()}.`}
                     </label>
                 </div>
-            </div> */}
+            </div> }
 
             <form onSubmit={handleSubmit} className="space-y-8">
-                Testator Details
-                {/* <div className="mb-8">
+                {/*Testator Details*/}
+                {<div className="mb-8">
                     <h2 className="text-blue-600 text-xl font-medium mb-4">1. Testator Details</h2>
                     <input
                         type="text"
@@ -338,10 +372,10 @@ Return the text in proper format and alignment
                         required
                         className="border p-2 rounded mb-4 w-full"
                     />
-                </div> */}
+                </div> }
 
                 {/* Marital Status */}
-                {/* <div className="mb-8">
+                <div className="mb-8">
                     <h2 className="text-blue-600 text-xl font-medium mb-4">2. Marital Status</h2>
                     <select
                         name="maritalStatus"
@@ -365,10 +399,10 @@ Return the text in proper format and alignment
                             className="border p-2 rounded mb-4 w-full"
                         />
                     )}
-                </div> */}
+                </div>
 
                 {/* Children */}
-                {/* <div className="mb-8">
+                <div className="mb-8">
                     <h2 className="text-blue-600 text-xl font-medium mb-4">3. Children</h2>
                     <select
                         name="hasChildren"
@@ -417,10 +451,10 @@ Return the text in proper format and alignment
                             </button>
                         </>
                     )}
-                </div> */}
+                </div>
 
                 {/* Family Details */}
-                {/* <div className="mb-8">
+                <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">4. Family Details</h2>
                 <h3 className="font-medium mb-2">Parents</h3>
                 <input
@@ -488,10 +522,10 @@ Return the text in proper format and alignment
                         </button>
                     </>
                 )}
-            </div> */}
+            </div>
 
             {/* Executor Details */}
-            {/* <div className="mb-8">
+            <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">5. Executor Details</h2>
                 <div className="mb-4">
                     <h3 className="font-medium mb-2">Primary Executor</h3>
@@ -534,10 +568,10 @@ Return the text in proper format and alignment
                         className="border p-2 rounded mb-4 w-full"
                     />
                 </div>
-            </div> */}
+            </div>
 
             {/* Beneficiaries and Bequests */}
-            {/* <div className="mb-8">
+            <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">6. Beneficiaries and Bequests</h2>
                 <h3 className="font-medium mb-2">Beneficiaries</h3>
                 {formData.beneficiaries.map((beneficiary, index) => (
@@ -616,10 +650,10 @@ Return the text in proper format and alignment
                 >
                     Add Specific Bequest
                 </button>
-            </div> */}
+            </div>
 
             {/* Debts */}
-            {/* <div className="mb-8">
+            <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">8. Debts</h2>
                 {formData.debts.map((debt, index) => (
                     <div key={index} className="flex items-center gap-4 mb-4">
@@ -660,9 +694,9 @@ Return the text in proper format and alignment
                 >
                     Add Debt
                 </button>
-            </div> */}
+            </div>
             {/* Guardianship */}
-            {/* <div className="mb-8">
+            <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">9. Guardianship</h2>
                 <textarea
                     name="guardianshipDetails"
@@ -671,10 +705,10 @@ Return the text in proper format and alignment
                     onChange={handleChange}
                     className="border p-2 rounded w-full h-32"
                 />
-            </div> */}
+            </div>
 
             {/* Witnesses */}
-            {/* <div className="mb-8">
+            <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">10. Witnesses</h2>
                 {formData.witnesses.map((witness, index) => (
                     <div key={index} className="flex items-center gap-4 mb-4">
@@ -710,10 +744,10 @@ Return the text in proper format and alignment
                 >
                     Add Witness
                 </button>
-            </div> */}
+            </div>
 
             {/* Other Instructions */}
-            {/* <div className="mb-8">
+            <div className="mb-8">
                 <h2 className="text-blue-600 text-xl font-medium mb-4">11. Other Instructions</h2>
                 
                 <h3 className="font-medium mb-2">Funeral Preferences</h3>
@@ -758,7 +792,7 @@ Return the text in proper format and alignment
                 >
                     Add Charitable Donation
                 </button>
-            </div> */}
+            </div>
 
             {/* Submit Button */}
             <div className="mt-12 text-center">
@@ -776,9 +810,15 @@ Return the text in proper format and alignment
                 <div className="mt-8">
                     <h2 className="text-blue-600 text-xl font-medium mb-4">Generated Will</h2>
                     <textarea
-                        value={response}
-                        className="border p-4 rounded w-full h-96"
+                        value={textAreaValue}
+                        onChange={handleTextAreaChange}
+                        className="border p-4 rounded w-full h-96 mb-4"
                     />
+                    <button
+                        onClick={generatePDF} 
+                        className="bg-blue-600 text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-blue-800 transition">
+                            Generate PDF
+                    </button>
                 </div>
             )}
             </div>
