@@ -6,6 +6,8 @@ import DocDrafter from './pages/DocDrafter';
 import DocAnalyser from './pages/DocAnalyser';
 import LegChatbot from './pages/LegChatbot';
 import Will from './components/Will';
+import Divorce from './components/Divorce';
+import Lease from './components/Lease';
 import Auth from './pages/Auth';
 import './App.css';
 
@@ -41,6 +43,8 @@ const App = () => {
                 <Route path="/chatbot" element={<LegChatbot />} />
                 <Route path="*" element={<Navigate to="/home" />} />
                 <Route path="/will" element={<Will />} />
+                <Route path="/divorce-agreement" element={<Divorce />} />
+                <Route path="/lease-agreement" element={<Lease />} />
               </>
             )}
           </Routes>
