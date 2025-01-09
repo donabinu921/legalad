@@ -26,7 +26,7 @@ const sendToGemini = async (message) => {
     });
 
     const result = await chat.sendMessage(message);
-    const response = await result.response;
+    const response =  result.response;
     return response.text();
   } catch (error) {
     console.error('Gemini API Error:', error);
