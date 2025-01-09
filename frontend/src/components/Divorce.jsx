@@ -5,7 +5,7 @@ import ChildrenAndCustody from "./divorce/ChildrenAndCustody";
 import FinancialAndProperty from "./divorce/FinancialAndProperty";
 import AdditionalTerms from "./divorce/AdditionalTerms";
 
-const Divorce = () => {
+const Divorce = ({setSystemInstruction,sendToGemini}) => {
   const [formData, setFormData] = useState({
     petitionerName: "",
     respondentName: "",
@@ -28,11 +28,15 @@ const Divorce = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Call your backend or document drafter with formData
+  const handleSubmit = async () => {
+    setSystemInstruction(
+      "Divorce system instruction here"
+    );
+    sendToGemini(
+      `Divorce details here ${formData}`
+    );
   };
+
 
   return (
     <div className="w-full mx-auto px-4 py-8">

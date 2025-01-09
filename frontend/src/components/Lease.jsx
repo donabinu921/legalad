@@ -5,7 +5,8 @@ import PartiesDetails from "./lease/PartiesDetails";
 import UtilitiesAndMaintenance from "./lease/UtilitiesAndMaintenance";
 import AdditionalTerms from "./lease/AdditionalTerms";
 
-const Lease = () => {
+const Lease = ({setSystemInstruction,sendToGemini}) => {
+  
   const [formData, setFormData] = useState({
     propertyAddress: "",
     propertyType: "",
@@ -29,11 +30,14 @@ const Lease = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Lease Agreement Data Submitted:", formData);
-    // Call your backend API or document drafter with the formData
-  };
+  const handleSubmit = async () => {
+    setSystemInstruction(
+      "Divorce system instruction here"
+    );
+    sendToGemini(
+      `Divorce details here ${formData}`
+    );
+  }
 
   return (
     <div className="w-full mx-auto px-4 py-8">
