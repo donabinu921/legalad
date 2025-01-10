@@ -28,14 +28,15 @@ const Divorce = ({setSystemInstruction,sendToGemini}) => {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     setSystemInstruction(
-      "Divorce system instruction here"
+      "You are a Divorce agreement creation agent"
     );
     sendToGemini(
-      `Divorce details here ${formData}`
+      ` Build it using these details ${JSON.stringify(formData)}`
     );
-  };
+  }
 
 
   return (

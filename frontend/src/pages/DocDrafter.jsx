@@ -23,9 +23,8 @@ const DocDrafter = () => {
     try {
       const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
-        systemInstruction:
-          "You are a will drafting agent. The user will provide the necessary details for drafting a will. Draft the will based on the rules in India. It is understood that this is a sample will and a lawyer should be consulted, so don't give advise and provide only the draft of the will.",
-        generationConfig: {
+        systemInstruction: systemInstruction,
+          generationConfig: {
           temperature: 1,
           topP: 0.95,
           topK: 40,
