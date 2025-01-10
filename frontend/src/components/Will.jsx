@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Will = ({ setSystemInstruction, sendToGemini }) => {
@@ -83,6 +84,7 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault()
     setSystemInstruction(
       "You are a will drafting agent. The user will provide the necessary details for drafting a will. Draft the will based on the rules in India. It is understood that this is a sample will and a lawyer should be consulted, so don't give advise and provide only the draft of the will."
     );
@@ -218,6 +220,7 @@ Return the text in proper format and alignment
 
   return (
     <div className="w-full mx-auto px-4 py-8">
+      <ToastContainer />
       <h1 className="text-center text-blue-600 text-3xl font-bold mb-12">
         Draft Your Will
       </h1>
@@ -883,7 +886,8 @@ Return the text in proper format and alignment
         {/* Submit Button */}
         <div className="mt-12 text-center">
           <button
-            type="submit"
+          type="submit"
+            onClick={handleSubmit}
             className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-800 transition"
           >
             Save Will
