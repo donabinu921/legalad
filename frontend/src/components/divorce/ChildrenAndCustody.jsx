@@ -1,7 +1,7 @@
 import React from "react";
 
 const ChildrenAndCustody = ({ formData, handleChange }) => (
-  <div className="space-y-4">
+  <div className="space-y-4 w-full">
     <h2 className="text-blue-600 text-xl font-medium mb-4">3. Children and Custody Details</h2>
     <div>
       <label className="block text-sm font-medium text-gray-700">Children Details</label>

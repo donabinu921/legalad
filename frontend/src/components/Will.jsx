@@ -85,6 +85,7 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    toast.info("Generating Will...")
     setSystemInstruction(
       "You are a will drafting agent. The user will provide the necessary details for drafting a will. Draft the will based on the rules in India. It is understood that this is a sample will and a lawyer should be consulted, so don't give advise and provide only the draft of the will."
     );
