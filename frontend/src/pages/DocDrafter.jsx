@@ -133,6 +133,12 @@ const DocDrafter = () => {
       <div>
         {clicked && (
           <div>
+            <button
+            className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
+            onClick={() => setClicked(false)}
+            >
+              Go to the Main Menu
+            </button>
             {page == "Will" && (
               <Will
                 setSystemInstruction={setSystemInstruction}
