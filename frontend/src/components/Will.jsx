@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { jsPDF } from "jspdf";
+// import { jsPDF } from "jspdf";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

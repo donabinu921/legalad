@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Auth.css';
 
 const Auth = ({ onAuthSuccess }) => {  
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [formData, setFormData] = useState({ username: '', password: '' });
 
   const toggleAuthMode = () => {
@@ -23,17 +23,20 @@ const Auth = ({ onAuthSuccess }) => {
     try {
       const response = await axios.post(url, formData);
       const { message, token } = response.data; // Destructure token and message
+      console.log('Response:', response.data);
   
       if (isLogin) {
-        localStorage.setItem('token', token); // Store token in localStorage
+        window.localStorage.setItem("USER", response.data.userId); // Store token in localStorage
         toast.success(`${message}, Logging you in...`);
       } else {
         toast.success(`${message}, You can now log in!`);
       }
   
+      
       setTimeout(() => {
         onAuthSuccess(); // Redirect or perform your action
       }, 1000); // Delay for 1 second
+
     } catch (error) {
       if (error.response) {
         toast.error(`Error: ${error.response.data.error}`);

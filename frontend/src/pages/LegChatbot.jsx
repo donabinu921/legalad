@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import FormattedText from '../components/FormattedText';
+import axios from 'axios';
 
 // Initialize the API
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
@@ -43,9 +43,33 @@ const LegChatbot = () => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  const getUserChat = async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/conversations/${userId}`);
 
+  
+      // Check if response.data is an array and map the messages
+      const messages = response.data.map(conversation => conversation.messages).flat() || [];
+      return messages; // Return the mapped messages array
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return []; // Return an empty array on error
+    }
+  };
+  
   useEffect(() => {
-    scrollToBottom();
+    const fetchMessages = async () => {
+      const msgs = await getUserChat(window.localStorage.getItem('USER'));
+      setMessages(msgs);
+    };
+  
+    fetchMessages();
+  }, []);
+  
+
+  
+  useEffect(() => {
+  scrollToBottom();
   }, [messages]);
 
   const sendMessage = async (e) => {
@@ -55,6 +79,7 @@ const LegChatbot = () => {
     const userMessage = inputMessage.trim();
     setInputMessage('');
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+
     setIsLoading(true);
 
     try {

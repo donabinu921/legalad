@@ -19,7 +19,7 @@ router.post('/signup', async (req, res) => {
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(201).json({ message: 'User created successfully', userId: newUser._id });
   } catch (err) {
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ message: 'Login successful', token });
+    res.status(200).json({ message: 'Login successful', token ,userId: user._id });
   } catch (err) {
     res.status(500).json({ error: 'Internal server error' });
   }
