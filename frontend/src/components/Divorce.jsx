@@ -4,22 +4,31 @@ import GroundsForDivorce from "./divorce/GroundsForDivorce";
 import ChildrenAndCustody from "./divorce/ChildrenAndCustody";
 import FinancialAndProperty from "./divorce/FinancialAndProperty";
 import AdditionalTerms from "./divorce/AdditionalTerms";
+import Witness from "./divorce/Witness";
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Divorce = ({setSystemInstruction,sendToGemini}) => {
   const [formData, setFormData] = useState({
+    dateOfDrafting: new Date().toISOString().split("T")[0],
     petitionerName: "",
+    petitionerAddress: "",
     respondentName: "",
+    respondentAddress: "",
     marriageDate: "",
+    location: "",
     separationDate: "",
-    groundsForDivorce: "",
+    groundsForDivorce: "Mutual Consent",
     childrenDetails: "",
     custodyAgreement: "",
     childSupportDetails: "",
     spousalSupportDetails: "",
     propertyDivision: "",
     additionalTerms: "",
+    witnessName: "",
+    witnessAddress: "",
+    addWitnessName: "",
+    addWitnessAddress: ""
   });
 
   const handleChange = (e) => {
@@ -52,6 +61,7 @@ const Divorce = ({setSystemInstruction,sendToGemini}) => {
         <ChildrenAndCustody formData={formData} handleChange={handleChange} />
         <FinancialAndProperty formData={formData} handleChange={handleChange} />
         <AdditionalTerms formData={formData} handleChange={handleChange} />
+        <Witness formData={formData} handleChange={handleChange} />
         <button
           type="submit"
           className="bg-blue-600 text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-blue-800 transition"

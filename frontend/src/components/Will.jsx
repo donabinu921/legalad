@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Will = ({ setSystemInstruction, sendToGemini }) => {
   const [formData, setFormData] = useState({
+    dateOfDrafting: new Date().toISOString().split("T")[0],
     testatorName: "",
     testatorAddress: "",
     dateOfBirth: "",
@@ -245,7 +246,7 @@ Return the text in proper format and alignment
           <div className="flex items-center">
             <input type="checkbox" checked={true} readOnly className="mr-2" />
             <label className="text-sm text-gray-700">
-              {`This will be dated ${new Date().toLocaleDateString()}.`}
+              {`This Will shall be dated ${new Date().toISOString().split("T")[0]} (YYYY/MM/DD).`}
             </label>
           </div>
         </div>

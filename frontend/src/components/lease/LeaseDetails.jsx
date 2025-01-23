@@ -46,6 +46,7 @@ const LeaseDetails = ({ formData, handleChange }) => (
         onChange={handleChange}
         className="border p-2 rounded mb-4 w-full"
         placeholder="Enter the security deposit amount"
+        required
       />
     </div>
   </div>

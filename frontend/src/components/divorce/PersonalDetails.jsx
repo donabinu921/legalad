@@ -13,6 +13,15 @@ const PersonalDetails = ({ formData, handleChange }) => (
         className="border p-2 rounded mb-4 w-full"
         required
       />
+      <label className="block text-sm font-medium text-gray-700">Petitioner Address</label>
+      <input
+        type="text"
+        name="petitionerAddress"
+        value={formData.petitionerAddress}
+        onChange={handleChange}
+        className="border p-2 rounded mb-4 w-full"
+        required
+      />
     </div>
     <div>
       <label className="block text-sm font-medium text-gray-700">Respondent Name</label>
@@ -20,6 +29,15 @@ const PersonalDetails = ({ formData, handleChange }) => (
         type="text"
         name="respondentName"
         value={formData.respondentName}
+        onChange={handleChange}
+        className="border p-2 rounded mb-4 w-full"
+        required
+      />
+      <label className="block text-sm font-medium text-gray-700">Respondent Address</label>
+      <input
+        type="text"
+        name="respondentAddress"
+        value={formData.respondentAddress}
         onChange={handleChange}
         className="border p-2 rounded mb-4 w-full"
         required
@@ -36,6 +54,17 @@ const PersonalDetails = ({ formData, handleChange }) => (
         required
       />
     </div>
+    <div>
+      <label className="block text-sm font-medium text-gray-700">Location of Marriage</label>
+      <input
+        type="text"
+        name="location"
+        value={formData.location}
+        onChange={handleChange}
+        className="border p-2 rounded mb-4 w-full"
+        required
+      />
+      </div>
     <div>
       <label className="block text-sm font-medium text-gray-700">Date of Separation</label>
       <input

@@ -12,6 +12,7 @@ const UtilitiesAndMaintenance = ({ formData, handleChange }) => (
         className="border p-2 rounded mb-4 w-full"
         rows="3"
         placeholder="Specify who is responsible for utilities (e.g., electricity, water)"
+        required
       ></textarea>
     </div>
     <div>
@@ -23,6 +24,7 @@ const UtilitiesAndMaintenance = ({ formData, handleChange }) => (
         className="border p-2 rounded mb-4 w-full"
         rows="3"
         placeholder="Specify maintenance responsibilities for the landlord and tenant"
+        required
       ></textarea>
     </div>
   </div>

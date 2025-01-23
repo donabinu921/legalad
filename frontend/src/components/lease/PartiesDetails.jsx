@@ -14,6 +14,16 @@ const PartiesDetails = ({ formData, handleChange }) => (
         placeholder="Enter the name of the landlord"
         required
       />
+      <label className="block text-sm font-medium text-gray-700">Landlord's Address</label>
+      <input
+        type="text"
+        name="landlordAddress"
+        value={formData.landlordAddress}
+        onChange={handleChange}
+        className="border p-2 rounded mb-4 w-full"
+        placeholder="Enter the address of the landlord"
+        required
+      />
     </div>
     <div>
       <label className="block text-sm font-medium text-gray-700">Tenant's Name</label>
@@ -28,15 +38,16 @@ const PartiesDetails = ({ formData, handleChange }) => (
       />
     </div>
     <div>
-      <label className="block text-sm font-medium text-gray-700">Tenant's Contact Information</label>
-      <textarea
-        name="tenantContact"
-        value={formData.tenantContact}
+      <label className="block text-sm font-medium text-gray-700">Tenant's Address</label>
+      <input
+        type="text"
+        name="tenantAddress"
+        value={formData.tenantAddress}
         onChange={handleChange}
         className="border p-2 rounded mb-4 w-full"
-        rows="2"
-        placeholder="Enter tenant's phone and email"
-      ></textarea>
+        placeholder="Enter the address of the tenant"
+        required
+      ></input>
     </div>
   </div>
 );

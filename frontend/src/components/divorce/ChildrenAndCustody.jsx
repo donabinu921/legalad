@@ -22,7 +22,7 @@ const ChildrenAndCustody = ({ formData, handleChange }) => (
         onChange={handleChange}
         className="border p-2 rounded mb-4 w-full"
         rows="3"
-        placeholder="Details of custody arrangement (e.g., sole, joint)"
+        placeholder="Details of custody arrangement (e.g., sole, joint) if applicable"
       ></textarea>
     </div>
     <div>
@@ -33,7 +33,7 @@ const ChildrenAndCustody = ({ formData, handleChange }) => (
         onChange={handleChange}
         className="border p-2 rounded mb-4 w-full"
         rows="3"
-        placeholder="Child support payment amount, frequency, and duration"
+        placeholder="Child support payment amount, frequency, and duration if applicable"
       ></textarea>
     </div>
   </div>

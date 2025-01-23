@@ -6,6 +6,10 @@ import axios from 'axios';
 // Initialize the API
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
 
+const clearChat = () => {
+  console.log('Clearing chat...');
+};
+
 // Replace mockGeminiAPI with this function
 const sendToGemini = async (message) => {
   try {
@@ -203,6 +207,21 @@ const LegChatbot = () => {
           }}
         >
           Send
+        </button>
+        <button
+          disabled={isLoading}
+          onClick={clearChat}
+          style={{
+            padding: '0.5rem 1rem',
+            backgroundColor: '#dc2626',
+            color: 'white',
+            border: 'none',
+            borderRadius: '0.375rem',
+            cursor: 'pointer',
+            disabled: isLoading ? 'opacity: 0.5' : ''
+          }}
+        >
+          Clear
         </button>
       </form>
     </div>

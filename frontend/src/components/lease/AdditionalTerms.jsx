@@ -9,7 +9,7 @@ const AdditionalTerms = ({ formData, handleChange }) => (
       onChange={handleChange}
       className="border p-2 rounded mb-4 w-full"
       rows="3"
-      placeholder="Specify any additional terms or conditions for the lease"
+      placeholder="Specify additional terms or conditions for the lease, if any"
     ></textarea>
   </div>
 );

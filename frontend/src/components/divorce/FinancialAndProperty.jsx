@@ -12,6 +12,7 @@ const FinancialAndProperty = ({ formData, handleChange }) => (
         className="border p-2 rounded mb-4 w-full"
         rows="3"
         placeholder="Alimony payment amount, frequency, and duration"
+        required
       ></textarea>
     </div>
     <div>
@@ -23,6 +24,7 @@ const FinancialAndProperty = ({ formData, handleChange }) => (
         className="border p-2 rounded mb-4 w-full"
         rows="4"
         placeholder="Details of how assets and debts to be divided"
+        required
       ></textarea>
     </div>
   </div>

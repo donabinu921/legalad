@@ -4,10 +4,12 @@ import LeaseDetails from "./lease/LeaseDetails";
 import PartiesDetails from "./lease/PartiesDetails";
 import UtilitiesAndMaintenance from "./lease/UtilitiesAndMaintenance";
 import AdditionalTerms from "./lease/AdditionalTerms";
+import Witness from "./divorce/Witness";
 
 const Lease = ({setSystemInstruction,sendToGemini}) => {
   
   const [formData, setFormData] = useState({
+    dateOfAgreement: new Date().toISOString().split("T")[0],
     propertyAddress: "",
     propertyType: "",
     leaseStartDate: "",
@@ -15,11 +17,16 @@ const Lease = ({setSystemInstruction,sendToGemini}) => {
     monthlyRent: "",
     securityDeposit: "",
     landlordName: "",
+    landlordAddress: "",
     tenantName: "",
-    tenantContact: "",
+    tenantAddress: "",
     utilitiesResponsibility: "",
     maintenanceResponsibility: "",
     additionalTerms: "",
+    witnessName: "",
+    witnessAddress: "",
+    addWitnessName: "",
+    addWitnessAddress: ""
   });
 
   const handleChange = (e) => {
@@ -49,6 +56,7 @@ const Lease = ({setSystemInstruction,sendToGemini}) => {
         <PartiesDetails formData={formData} handleChange={handleChange} />
         <UtilitiesAndMaintenance formData={formData} handleChange={handleChange} />
         <AdditionalTerms formData={formData} handleChange={handleChange} />
+        <Witness formData={formData} handleChange={handleChange} />
         <button
           type="submit"
           className="bg-blue-600 text-white px-8 py-3 rounded-lg text-sm font-medium hover:bg-blue-800 transition"
