@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Auth.css';
 
 const Auth = ({ onAuthSuccess }) => {  
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ username: '', password: '' });
 
   const toggleAuthMode = () => {

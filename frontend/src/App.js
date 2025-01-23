@@ -12,7 +12,7 @@ import Auth from './pages/Auth';
 import './App.css';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Function to simulate login/signup success
   const handleAuthSuccess = () => {

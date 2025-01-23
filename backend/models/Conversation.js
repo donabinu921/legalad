@@ -5,11 +5,9 @@ const MessageSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['user', 'assistant'], // Restrict role to specific values
-    required: true,
   },
   content: {
     type: String,
-    required: true,
   },
 });
 
@@ -22,7 +20,6 @@ const ConversationSchema = new mongoose.Schema({
   },
   messages: {
     type: [MessageSchema], // Array of message objects
-    required: true,
   },
 }, { timestamps: true }); // Adds createdAt and updatedAt fields automatically
 
