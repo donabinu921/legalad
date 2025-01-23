@@ -772,7 +772,6 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
           </button>
         </div>
       </form>
-      <button onClick={handleSubmit}>awdawd</button>
     </div>
   );
 };

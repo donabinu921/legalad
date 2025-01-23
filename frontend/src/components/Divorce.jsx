@@ -43,10 +43,10 @@ const Divorce = ({setSystemInstruction,sendToGemini}) => {
     e.preventDefault()
     toast.info("Generating Divorce Agreement...")
     setSystemInstruction(
-      "You are a Divorce agreement creation agent"
+      "You are a Divorce agreement creation agent. The user will provide the necessary details for drafting the agreement. Draft it based on the rules in India. It is understood that this is a sample and a lawyer should be consulted, so don't mention the need for a lawyer. Also don't provide legal advice just draft the agreement"
     );
     sendToGemini(
-      ` Build it using these details ${JSON.stringify(formData)}`
+      ` Build it using these details ${JSON.stringify(formData)} Return the text in proper format and alignment `
     );
   }
 
