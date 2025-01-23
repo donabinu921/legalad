@@ -6,17 +6,13 @@ import axios from "axios";
 // Initialize the API
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
 
-const clearChat = () => {
-  console.log('Clearing chat...');
-};
-
 // Replace mockGeminiAPI with this function
 const sendToGemini = async (message) => {
   try {
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
       systemInstruction:
-        "You are a legal advisor. You will provide answers to queries based on the ruleset used in  India. Do not answer vaguely. Give clear concise steps on how the user can proceed in that situation. Refer to yourself as legal advisor. Don't specify the need for a lawyer unless the user asks for it. Ask the user for more details one query at a time.",
+      "You are a legal advisor. You will provide answers to queries based on the ruleset used in  India. Do not answer vaguely. Give clear concise steps on how the user can proceed in that situation. Refer to yourself as legal advisor. Don't specify the need for a lawyer unless the user asks for it. Ask the user for more details one query at a time.",
       generationConfig: {
         temperature: 1,
         topP: 0.95,
@@ -24,12 +20,12 @@ const sendToGemini = async (message) => {
         maxOutputTokens: 8192,
       },
     });
-
+    
     const chat = model.startChat({
       history: [],
       generationConfig: { temperature: 0.9 },
     });
-
+    
     const result = await chat.sendMessage(message);
     const response = result.response;
     return response.text();
@@ -45,10 +41,21 @@ const LegChatbot = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
-
+  
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  
+  const clearChat = async () => {
+    console.log('Clearing chat...');
+    await axios.post(`http://localhost:5000/api/conversations/${userId}/clear`)
+      .then((response) => {
+        console.log(response.data);
+        setMessages([]);
+      });
+  };
+
+
   const getUserChat = async (userId) => {
     try {
       const response = await axios.get(
