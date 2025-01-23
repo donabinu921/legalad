@@ -10,7 +10,7 @@ router.post('/conversations', async (req, res) => {
     const { userId, messages } = req.body;
 
     // Validate the required fields
-    if (!userId || !messages || !Array.isArray(messages)) {
+    if (!userId || !messages) {
       return res.status(400).json({ error: 'userId and messages are required, and messages must be an array' });
     }
 
@@ -23,6 +23,9 @@ router.post('/conversations', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while creating the conversation' });
   }
 });
+
+
+
 
 router.get('/conversations/:userId', async (req, res) => {
     try {
@@ -44,31 +47,53 @@ router.get('/conversations/:userId', async (req, res) => {
 
   
 // POST request to add a message to an existing conversation
-router.post('/conversations/:conversationId/messages', async (req, res) => {
-  try {
-    const { conversationId } = req.params;
-    const { role, content } = req.body;
-
-    // Validate the required fields
-    if (!role || !content) {
-      return res.status(400).json({ error: 'Both role and content are required' });
+router.post('/conversations/:userId/messages', async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { messages } = req.body;
+  
+      // Validate the required fields
+    //   if (!Array.isArray(messages) || messages.length === 0) {
+    //     return res.status(400).json({ error: 'Messages array is required and cannot be empty' });
+    //   }
+  
+      // Find the conversation by userId and update its messages array
+      const updatedConversation = await Conversation.findOneAndUpdate(
+        { userId }, // Find the conversation by userId
+        { $push: { messages: { $each: messages } } }, // Add multiple messages to the array
+        { new: true } // Return the updated document
+      );
+  
+      if (!updatedConversation) {
+        return res.status(404).json({ error: 'Conversation not found for the given userId' });
+      }
+  
+      res.status(200).json(updatedConversation);
+    } catch (error) {
+      console.error('Error updating conversation:', error);
+      res.status(500).json({ error: 'An error occurred while updating the messages' });
     }
+  });
+  
+  
 
-    // Find the conversation and update it by adding the new message
-    const updatedConversation = await Conversation.findByIdAndUpdate(
-      conversationId,
-      { $push: { messages: { role, content } } }, // Add the new message
-      { new: true } // Return the updated document
-    );
-
-    if (!updatedConversation) {
-      return res.status(404).json({ error: 'Conversation not found' });
+  router.delete('/conversations/:userId', async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      // Find and delete the conversation by userId
+      const deletedConversation = await Conversation.findOneAndDelete({ userId });
+  
+      if (!deletedConversation) {
+        return res.status(404).json({ error: 'Conversation not found for the given userId' });
+      }
+  
+      res.status(200).json({ message: 'Conversation deleted successfully', deletedConversation });
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+      res.status(500).json({ error: 'An error occurred while deleting the conversation' });
     }
-
-    res.status(200).json(updatedConversation);
-  } catch (error) {
-    res.status(500).json({ error: 'An error occurred while adding the message' });
-  }
-});
+  });
+  
 
 module.exports = router;

@@ -3,27 +3,51 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const authenticateToken = require('../middleware/authenticateToken');
-
+const Conversation = require('../models/Conversation'); // Import the Conversation model
 const router = express.Router();
 
 // Signup route, no jwt needed
 router.post('/signup', async (req, res) => {
   const { username, password } = req.body;
+
+  // Validate input
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
+
   try {
+    // Check if the user already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create the new user
     const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: 'User created successfully', userId: newUser._id });
-  } catch (err) {
+    // Create an initial conversation for the new user
+    const newConversation = new Conversation({
+      userId: newUser._id,
+      messages: [], // Start with an empty messages array
+    });
+    await newConversation.save();
+
+    // Send the success response
+    res.status(201).json({
+      message: 'User created successfully',
+      userId: newUser._id,
+      conversationId: newConversation._id,
+    });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // Login route
 router.post('/login', async (req, res) => {
