@@ -60,10 +60,9 @@ router.post('/conversations/:userId/messages', async (req, res) => {
       // Find the conversation by userId and update its messages array
       const updatedConversation = await Conversation.findOneAndUpdate(
         { userId }, // Find the conversation by userId
-        { $push: { messages: { $each: messages } } }, // Add multiple messages to the array
+        { $set: { messages } }, // Replace the messages array
         { new: true } // Return the updated document
       );
-  
       if (!updatedConversation) {
         return res.status(404).json({ error: 'Conversation not found for the given userId' });
       }
@@ -75,25 +74,29 @@ router.post('/conversations/:userId/messages', async (req, res) => {
     }
   });
   
-  
-
-  router.delete('/conversations/:userId', async (req, res) => {
+  // POST request to clear the messages of a user
+  router.post('/conversations/:userId/clear', async (req, res) => {
     try {
       const { userId } = req.params;
-  
-      // Find and delete the conversation by userId
-      const deletedConversation = await Conversation.findOneAndDelete({ userId });
-  
-      if (!deletedConversation) {
+
+      // Find the conversation by userId and clear its messages array
+      const updatedConversation = await Conversation.findOneAndUpdate(
+        { userId }, // Find the conversation by userId
+        { $set: { messages: [] } }, // Clear the messages array
+        { new: true } // Return the updated document
+      );
+
+      if (!updatedConversation) {
         return res.status(404).json({ error: 'Conversation not found for the given userId' });
       }
-  
-      res.status(200).json({ message: 'Conversation deleted successfully', deletedConversation });
+
+      res.status(200).json(updatedConversation);
     } catch (error) {
-      console.error('Error deleting conversation:', error);
-      res.status(500).json({ error: 'An error occurred while deleting the conversation' });
+      console.error('Error clearing messages:', error);
+      res.status(500).json({ error: 'An error occurred while clearing the messages' });
     }
   });
+
   
 
 module.exports = router;
