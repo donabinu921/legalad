@@ -78,7 +78,7 @@ const LegChatbot = () => {
     };
 
     fetchMessages();
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -103,6 +103,13 @@ const LegChatbot = () => {
         { role: "assistant", content: response },
       ]);
 
+      axios.post(`http://localhost:5000/api/conversations/${userId}/messages`, 
+       { messages }
+     ).then((response) => {
+       console.log(response.data);
+     }
+     );
+   
       
     } catch (error) {
       console.error("Error:", error);
@@ -115,13 +122,6 @@ const LegChatbot = () => {
       ]);
 
       }
-      await axios.post(`http://localhost:5000/api/conversations/${userId}/messages`, 
-        { messages }
-      ).then((response) => {
-        console.log(response.data);
-      }
-      );
-    
     setIsLoading(false);
   };
 
