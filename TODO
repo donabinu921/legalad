@@ -3,3 +3,9 @@
 Format chat using MD
 Chat history - last msg storage
 Find data set for finetuning document analyzer
+
+
+
+MAJOR FIXes
+Model Dataset
+CHatbot proper memory.
