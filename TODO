@@ -1,8 +1,5 @@
 # TODO List
 
-Chatbot memory 
-Clear chat button
 Format chat using MD
-Fix userlogout while refreshing
-Replace templates
+Chat history - last msg storage
 Find data set for finetuning document analyzer
