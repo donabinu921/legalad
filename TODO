@@ -1,11 +1,12 @@
 # TODO List
 
-Format chat using MD
-Chat history - last msg storage
+amith - Format chat using MD
+amith - Chat history - last msg storage
+
 Find data set for finetuning document analyzer
 
 
 
 MAJOR FIXes
-Model Dataset
+dona - Model Dataset
 CHatbot proper memory.

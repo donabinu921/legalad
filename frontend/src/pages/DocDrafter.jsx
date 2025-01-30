@@ -5,7 +5,7 @@ import Will from "../components/Will";
 import Lease from "../components/Lease";
 import Divorce from "../components/Divorce";
 import "react-toastify/dist/ReactToastify.css";
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 
 const DocDrafter = () => {
@@ -25,7 +25,7 @@ const DocDrafter = () => {
       const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
         systemInstruction: systemInstruction,
-          generationConfig: {
+        generationConfig: {
           temperature: 1,
           topP: 0.95,
           topK: 40,
@@ -49,7 +49,6 @@ const DocDrafter = () => {
 
   const Submit = async (message) => {
     toast.info("Generating document...");
-
 
     try {
       const result = await sendToGemini(message);
@@ -135,10 +134,13 @@ const DocDrafter = () => {
         {clicked && (
           <div>
             <button
-            className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
-            onClick={() => setClicked(false)}
+              className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
+              onClick={() => {
+                setClicked(false);
+                setResponse(false);
+              }}
             >
-              <FaArrowLeft/>
+              <FaArrowLeft />
             </button>
             {page == "Will" && (
               <Will
@@ -166,7 +168,7 @@ const DocDrafter = () => {
         {response && (
           <div className="mt-8">
             <h2 className="text-blue-600 text-xl font-medium mb-4">
-              Generated Will
+              Generated Document
             </h2>
             <textarea
               value={textAreaValue}

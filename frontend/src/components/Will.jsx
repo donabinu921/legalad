@@ -765,7 +765,7 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
         <div className="mt-12 text-center">
           <button
           type="submit"
-            onClick={handleSubmit}
+            onSubmit={handleSubmit}
             className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-800 transition"
           >
             Save Will

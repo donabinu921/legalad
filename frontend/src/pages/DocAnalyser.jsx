@@ -156,6 +156,8 @@ const DocAnalyser = () => {
       1. A summary of the key points
       2. Any legal implications under Indian law
       3. Recommended actions or next steps
+
+      Make the content easy to understand for a person with little or no legal knowledge.
       
       Document content:
       ${fileContent}`;
