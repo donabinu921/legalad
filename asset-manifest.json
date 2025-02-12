@@ -1,15 +1,26 @@
 {
   "files": {
-    "main.css": "/legalad/static/css/main.f545e4f0.css",
-    "main.js": "/legalad/static/js/main.86e1233e.js",
-    "static/js/453.8ab44547.chunk.js": "/legalad/static/js/453.8ab44547.chunk.js",
+    "main.css": "/legalad/static/css/main.1d681676.css",
+    "main.js": "/legalad/static/js/main.6a0cc550.js",
+    "static/js/239.dfdb0d71.chunk.js": "/legalad/static/js/239.dfdb0d71.chunk.js",
+    "static/js/213.042bb37f.chunk.js": "/legalad/static/js/213.042bb37f.chunk.js",
+    "static/js/732.9a305367.chunk.js": "/legalad/static/js/732.9a305367.chunk.js",
+    "static/js/903.d61330c0.chunk.js": "/legalad/static/js/903.d61330c0.chunk.js",
+    "static/js/453.f75ac2fb.chunk.js": "/legalad/static/js/453.f75ac2fb.chunk.js",
+    "static/js/133.44f8238a.chunk.js": "/legalad/static/js/133.44f8238a.chunk.js",
+    "static/js/275.fe058b12.chunk.js": "/legalad/static/js/275.fe058b12.chunk.js",
     "index.html": "/legalad/index.html",
-    "main.f545e4f0.css.map": "/legalad/static/css/main.f545e4f0.css.map",
-    "main.86e1233e.js.map": "/legalad/static/js/main.86e1233e.js.map",
-    "453.8ab44547.chunk.js.map": "/legalad/static/js/453.8ab44547.chunk.js.map"
+    "main.1d681676.css.map": "/legalad/static/css/main.1d681676.css.map",
+    "main.6a0cc550.js.map": "/legalad/static/js/main.6a0cc550.js.map",
+    "239.dfdb0d71.chunk.js.map": "/legalad/static/js/239.dfdb0d71.chunk.js.map",
+    "213.042bb37f.chunk.js.map": "/legalad/static/js/213.042bb37f.chunk.js.map",
+    "732.9a305367.chunk.js.map": "/legalad/static/js/732.9a305367.chunk.js.map",
+    "453.f75ac2fb.chunk.js.map": "/legalad/static/js/453.f75ac2fb.chunk.js.map",
+    "133.44f8238a.chunk.js.map": "/legalad/static/js/133.44f8238a.chunk.js.map",
+    "275.fe058b12.chunk.js.map": "/legalad/static/js/275.fe058b12.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f545e4f0.css",
-    "static/js/main.86e1233e.js"
+    "static/css/main.1d681676.css",
+    "static/js/main.6a0cc550.js"
   ]
 }
