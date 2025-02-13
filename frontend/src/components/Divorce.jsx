@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import PersonalDetails from "./divorce/PersonalDetails";
-import GroundsForDivorce from "./divorce/GroundsForDivorce";
+import Petitioner1Details from "./divorce/Petitioner1Details";
+import Petitioner2Details from "./divorce/Petitioner2Details";
+import Separation from "./divorce/Separation";
+import MarriageDetails from "./divorce/MarriageDetails";
 import ChildrenAndCustody from "./divorce/ChildrenAndCustody";
 import FinancialAndProperty from "./divorce/FinancialAndProperty";
 import AdditionalTerms from "./divorce/AdditionalTerms";
@@ -10,25 +12,44 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Divorce = ({setSystemInstruction,sendToGemini}) => {
   const [formData, setFormData] = useState({
-    dateOfDrafting: new Date().toISOString().split("T")[0],
-    petitionerName: "",
-    petitionerAddress: "",
-    respondentName: "",
-    respondentAddress: "",
-    marriageDate: "",
-    location: "",
-    separationDate: "",
-    groundsForDivorce: "Mutual Consent",
-    childrenDetails: "",
-    custodyAgreement: "",
-    childSupportDetails: "",
-    spousalSupportDetails: "",
-    propertyDivision: "",
-    additionalTerms: "",
-    witnessName: "",
-    witnessAddress: "",
-    addWitnessName: "",
-    addWitnessAddress: ""
+    "dateOfDrafting": new Date().toISOString().split("T")[0],
+    "petitioner1Name": "",
+    "petitioner1Age": "",
+    "petitioner1Occupation": "",
+    "petitioner1Address": "",
+    "petitioner1MobileNo": "",
+    "petitioner1EmailID": "",
+    "petitioner1PreMaritalStatus": "",
+    "petitioner1Religion": "",
+    "petitioner1PermanentResidence": "",
+    "petitioner2Name": "",
+    "petitioner2Age": "",
+    "petitioner2Occupation": "",
+    "petitioner2Address": "",
+    "petitioner2MobileNo": "",
+    "petitioner2EmailID": "",
+    "petitioner2PreMaritalStatus": "",
+    "petitioner2Religion": "",
+    "petitioner2PermanentResidence": "",
+    "reasonForSeparation": "",
+    "separationDate": "",
+    "marriageDate": "",
+    "marriageLocation": "",
+    "marriageRites": "",
+    "marriageRegistrationDetails": "",
+    "childrenDetails": "",
+    "custodyAgreement": "",
+    "childSupportDetails": "",
+    "spousalSupportDetails": "",
+    "propertyDivision": "",
+    "pendingLitigations": "",
+    "withdrawalOfLitigations": "",
+    "additionalTerms": "",
+    "witnessName": "",
+    "witnessAddress": "",
+    "addWitnessName": "",
+    "addWitnessAddress": "",
+    "courtFeePaid": true
   });
 
   const handleChange = (e) => {
@@ -52,12 +73,16 @@ const Divorce = ({setSystemInstruction,sendToGemini}) => {
 
 
   return (
-    <div className="w-full mx-auto px-4 py-8">
+    <div className="w-full mx-auto px-4 py-8 ">
       <ToastContainer/>
       <h1 className="text-center text-blue-600 text-3xl font-bold mb-12">Draft your Divorce Agreement</h1>
       <form onSubmit={handleSubmit} className="space-y-8 w-full">
-        <PersonalDetails formData={formData} handleChange={handleChange} />
-        <GroundsForDivorce formData={formData} handleChange={handleChange} />
+        <input type="checkbox" checked/>
+        <label>  This agreement is made and entered into on {formData.dateOfDrafting} (YYYY/MM/DD)</label>
+        <Petitioner1Details formData={formData} handleChange={handleChange} />
+        <Petitioner2Details formData={formData} handleChange={handleChange} />
+        <Separation formData={formData} handleChange={handleChange} />
+        <MarriageDetails formData={formData} handleChange={handleChange} />
         <ChildrenAndCustody formData={formData} handleChange={handleChange} />
         <FinancialAndProperty formData={formData} handleChange={handleChange} />
         <AdditionalTerms formData={formData} handleChange={handleChange} />
