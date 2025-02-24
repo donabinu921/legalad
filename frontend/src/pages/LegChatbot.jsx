@@ -12,7 +12,7 @@ const sendToGemini = async (message) => {
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
       systemInstruction:
-      "You are a legal advisor. You will provide answers to queries based on the ruleset used in  India. Do not answer vaguely. Give clear concise steps on how the user can proceed in that situation. Refer to yourself as legal advisor. Don't specify the need for a lawyer unless the user asks for it. Ask the user for more details one query at a time.",
+        "You are pretending to be a legal advisor. You will provide answers to queries based on the ruleset used in  India. Do not answer vaguely. Give clear steps on how the user can proceed in that situation. Refer to yourself as legal advisor. Only provide the legal side of the queries.",
       generationConfig: {
         temperature: 1,
         topP: 0.95,
@@ -20,12 +20,12 @@ const sendToGemini = async (message) => {
         maxOutputTokens: 8192,
       },
     });
-    
+
     const chat = model.startChat({
       history: [],
       generationConfig: { temperature: 0.9 },
     });
-    
+
     const result = await chat.sendMessage(message);
     const response = result.response;
     return response.text();
@@ -41,20 +41,20 @@ const LegChatbot = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
-  
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  
+
   const clearChat = async () => {
-    console.log('Clearing chat...');
-    await axios.post(`http://localhost:5000/api/conversations/${userId}/clear`)
+    console.log("Clearing chat...");
+    await axios
+      .post(`http://localhost:5000/api/conversations/${userId}/clear`)
       .then((response) => {
         console.log(response.data);
         setMessages([]);
       });
   };
-
 
   const getUserChat = async (userId) => {
     try {
@@ -63,7 +63,8 @@ const LegChatbot = () => {
       );
 
       // Check if response.data is an array and map the messages
-      const messages = response.data.map((conversation) => conversation.messages).flat() || [];
+      const messages =
+        response.data.map((conversation) => conversation.messages).flat() || [];
       return messages; // Return the mapped messages array
     } catch (error) {
       console.error("Error fetching user chat:", error);
@@ -84,8 +85,7 @@ const LegChatbot = () => {
     scrollToBottom();
   }, [messages]);
 
-  const sendMessage = async (e) => 
-    {
+  const sendMessage = async (e) => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
 
@@ -97,20 +97,23 @@ const LegChatbot = () => {
 
     try {
       // Replace this with actual API call to Gemini
-      const response = await sendToGemini(`New message:${userMessage} previous messages: ${JSON.stringify(messages)}`);
+      const response = await sendToGemini(
+        `New message:${userMessage} previous messages: ${JSON.stringify(
+          messages
+        )}`
+      );
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: response },
       ]);
 
-      axios.post(`http://localhost:5000/api/conversations/${userId}/messages`, 
-       { messages }
-     ).then((response) => {
-       console.log(response.data);
-     }
-     );
-   
-      
+      axios
+        .post(`http://localhost:5000/api/conversations/${userId}/messages`, {
+          messages,
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
     } catch (error) {
       console.error("Error:", error);
       setMessages((prev) => [
@@ -120,8 +123,7 @@ const LegChatbot = () => {
           content: "I apologize, but I encountered an error. Please try again.",
         },
       ]);
-
-      }
+    }
     setIsLoading(false);
   };
 
@@ -257,13 +259,13 @@ const LegChatbot = () => {
           disabled={isLoading}
           onClick={clearChat}
           style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#dc2626',
-            color: 'white',
-            border: 'none',
-            borderRadius: '0.375rem',
-            cursor: 'pointer',
-            disabled: isLoading ? 'opacity: 0.5' : ''
+            padding: "0.5rem 1rem",
+            backgroundColor: "#dc2626",
+            color: "white",
+            border: "none",
+            borderRadius: "0.375rem",
+            cursor: "pointer",
+            disabled: isLoading ? "opacity: 0.5" : "",
           }}
         >
           Clear
