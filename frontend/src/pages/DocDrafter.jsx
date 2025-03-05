@@ -4,6 +4,7 @@ import { jsPDF } from "jspdf";
 import Will from "../components/Will";
 import Lease from "../components/Lease";
 import Divorce from "../components/Divorce";
+import Nda from "../components/Nda";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
@@ -127,6 +128,12 @@ const DocDrafter = () => {
             >
               Lease Agreement
             </button>
+            <button
+              className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
+              onClick={() => onButtonClick("Nda")}
+            >
+              Non-Disclosure Agreement
+            </button>
           </div>
         </div>
       )}
@@ -156,6 +163,12 @@ const DocDrafter = () => {
             )}
             {page == "Lease" && (
               <Lease
+                setSystemInstruction={setSystemInstruction}
+                sendToGemini={Submit}
+              />
+            )}
+            {page == "Nda" && (
+              <Nda
                 setSystemInstruction={setSystemInstruction}
                 sendToGemini={Submit}
               />
