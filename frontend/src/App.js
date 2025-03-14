@@ -8,8 +8,10 @@ import LegChatbot from './pages/LegChatbot';
 import Will from './components/Will';
 import Divorce from './components/Divorce';
 import Lease from './components/Lease';
+import Nda from './components/Nda';
 import Auth from './pages/Auth';
 import './App.css';
+import Partnership from './components/Partnership';
 import LawLookup from './pages/LawLookup';
 
 const App = () => {
@@ -54,6 +56,8 @@ const App = () => {
                 <Route path="/will" element={<Will />} />
                 <Route path="/divorce-agreement" element={<Divorce />} />
                 <Route path="/lease-agreement" element={<Lease />} />
+                <Route path="/nda" element={<Nda />} />
+                <Route path='/partnership' element={<Partnership />} />
                 <Route path ="/law-lookup" element={<LawLookup />} />
               </>
             )}

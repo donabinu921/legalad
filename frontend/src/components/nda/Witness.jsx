@@ -3,7 +3,7 @@ import React from 'react'
 const Witness = ({formData,handleChange}) => {
   return (
     <div className='space-y-4 w-full'>
-        <h2 className="text-blue-600 text-xl font-medium mb-4">9. Witnesses Details</h2>
+        <h2 className="text-blue-600 text-xl font-medium mb-4">6. Witnesses Details</h2>
         <div>
         <label className="block text-sm font-medium text-gray-700">Witness Name</label>
         <input

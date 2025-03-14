@@ -4,6 +4,8 @@ import { jsPDF } from "jspdf";
 import Will from "../components/Will";
 import Lease from "../components/Lease";
 import Divorce from "../components/Divorce";
+import Nda from "../components/Nda";
+import Partnership from "../components/Partnership";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
@@ -64,7 +66,7 @@ const DocDrafter = () => {
   useEffect(() => {
     if (response) {
       setTextAreaValue(response);
-      toast.success("Will generated successfully!");
+      toast.success("Document generated successfully!");
     }
   }, [response]);
 
@@ -127,6 +129,18 @@ const DocDrafter = () => {
             >
               Lease Agreement
             </button>
+            <button
+              className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
+              onClick={() => onButtonClick("Nda")}
+            >
+              Non-Disclosure Agreement
+            </button>
+            <button
+              className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
+              onClick={() => onButtonClick("Partnership")}
+            >
+              Partnership Deed
+            </button>
           </div>
         </div>
       )}
@@ -142,20 +156,32 @@ const DocDrafter = () => {
             >
               <FaArrowLeft />
             </button>
-            {page == "Will" && (
+            {page === "Will" && (
               <Will
                 setSystemInstruction={setSystemInstruction}
                 sendToGemini={Submit}
               />
             )}
-            {page == "Divorce" && (
+            {page === "Divorce" && (
               <Divorce
                 setSystemInstruction={setSystemInstruction}
                 sendToGemini={Submit}
               />
             )}
-            {page == "Lease" && (
+            {page === "Lease" && (
               <Lease
+                setSystemInstruction={setSystemInstruction}
+                sendToGemini={Submit}
+              />
+            )}
+            {page === "Nda" && (
+              <Nda
+                setSystemInstruction={setSystemInstruction}
+                sendToGemini={Submit}
+              />
+            )}
+            {page === "Partnership" && (
+              <Partnership
                 setSystemInstruction={setSystemInstruction}
                 sendToGemini={Submit}
               />
