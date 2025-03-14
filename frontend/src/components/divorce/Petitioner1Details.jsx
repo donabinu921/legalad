@@ -2,7 +2,7 @@ import React from "react";
 
 const Petitioner1Details = ({ formData, handleChange }) => (
   <div className="space-y-4 w-full">
-    <h2 className="text-blue-600 text-xl font-medium mb-4">1. Personal Details of Petitioner 1</h2>
+    <h2 className="text-blue-600 text-xl font-medium mb-4">2. Personal Details of Petitioner 1 (Husband)</h2>
     <div>
       <label className="block text-sm font-medium text-gray-700">Petitioner 1 Name</label>
       <input
