@@ -10,6 +10,7 @@ import Divorce from './components/Divorce';
 import Lease from './components/Lease';
 import Auth from './pages/Auth';
 import './App.css';
+import LawLookup from './pages/LawLookup';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -53,6 +54,7 @@ const App = () => {
                 <Route path="/will" element={<Will />} />
                 <Route path="/divorce-agreement" element={<Divorce />} />
                 <Route path="/lease-agreement" element={<Lease />} />
+                <Route path ="/law-lookup" element={<LawLookup />} />
               </>
             )}
           </Routes>

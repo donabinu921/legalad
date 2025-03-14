@@ -29,6 +29,7 @@ const Sidebar = ({ onLogout }) => {
           { path: '/document-drafter', label: 'Document Drafter', icon: <FaFileAlt /> },
           { path: '/document-analyser', label: 'Document Analyser', icon: <FaFileSignature /> },
           { path: '/chatbot', label: 'Legal Chatbot', icon: <FaRobot /> },
+          { path: '/law-lookup', label: 'Case Lookup', icon: <FaFileAlt /> },
         ].map((tab) => (
           <li
             key={tab.path}

@@ -22,6 +22,12 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
+    //password strength
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({ error: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and at least 6 characters' });
+    }
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
