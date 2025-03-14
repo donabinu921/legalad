@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { jsPDF } from "jspdf";
+import ReactMarkdown from "react-markdown"; // Add this import
 import Will from "../components/Will";
 import Lease from "../components/Lease";
 import Divorce from "../components/Divorce";
@@ -62,7 +63,7 @@ const DocDrafter = () => {
     }
   };
 
-  // PDF AAKANA SECTION
+  // PDF SECTION
   useEffect(() => {
     if (response) {
       setTextAreaValue(response);
@@ -82,7 +83,7 @@ const DocDrafter = () => {
     const maxLineHeight = pageHeight - margin * 2;
     let y = margin;
 
-    const lines = doc.splitTextToSize(textAreaValue, 180); // Split text into lines that fit within 180 units width
+    const lines = doc.splitTextToSize(textAreaValue, 180);
 
     lines.forEach((line) => {
       if (y + 10 > maxLineHeight) {
@@ -105,6 +106,7 @@ const DocDrafter = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
+      <ToastContainer /> {/* Add this to display toasts */}
       {!clicked && (
         <div>
           <h1 className="text-blue-600 text-2xl mb-12 text-center font-bold">
@@ -151,7 +153,7 @@ const DocDrafter = () => {
               className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
               onClick={() => {
                 setClicked(false);
-                setResponse(false);
+                setResponse(""); // Changed from false to "" to match string type
               }}
             >
               <FaArrowLeft />
@@ -192,14 +194,20 @@ const DocDrafter = () => {
 
       <div>
         {response && (
-          <div className="mt-8">
+          <div className="mt-8 max-w-2xl">
             <h2 className="text-blue-600 text-xl font-medium mb-4">
               Generated Document
             </h2>
+            {/* Display formatted markdown */}
+            <div className="border p-4 rounded w-full mb-4 bg-white">
+              <ReactMarkdown>{response}</ReactMarkdown>
+            </div>
+            {/* Optional: Keep textarea for editing */}
             <textarea
               value={textAreaValue}
               onChange={handleTextAreaChange}
               className="border p-4 rounded w-full h-96 mb-4"
+              placeholder="Edit the document here if needed..."
             />
             <button
               onClick={generatePDF}

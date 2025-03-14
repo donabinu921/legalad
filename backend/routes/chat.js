@@ -1,102 +1,89 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Conversation = require('../models/Conversation'); // Import the Conversation model
+const Conversation = require('../models/Conversation');
 
 const router = express.Router();
 
-// POST request to create a new conversation with messages
-router.post('/conversations', async (req, res) => {
+// GET conversation messages for a user
+router.get('/conversations/:userId', async (req, res) => {
   try {
-    const { userId, messages } = req.body;
-
-    // Validate the required fields
-    if (!userId || !messages) {
-      return res.status(400).json({ error: 'userId and messages are required, and messages must be an array' });
+    const { userId } = req.params;
+    
+    const conversation = await Conversation.findOne({ userId });
+    
+    // Return empty array if no conversation exists (matches frontend expectation)
+    if (!conversation) {
+      return res.status(200).json([]);
     }
-
-    // Create a new conversation
-    const newConversation = new Conversation({ userId, messages });
-    await newConversation.save();
-
-    res.status(201).json(newConversation);
+    
+    res.status(200).json(conversation.messages);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while creating the conversation' });
+    console.error('Error fetching conversation:', error);
+    res.status(500).json({ error: 'Failed to fetch conversation' });
   }
 });
 
+// POST to create or update conversation messages
+router.post('/conversations/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { messages } = req.body;
 
-
-
-router.get('/conversations/:userId', async (req, res) => {
-    try {
-      const { userId } = req.params;
-  
-      // Find all conversations for the given userId
-      const conversations = await Conversation.find({ userId });
-  
-      if (!conversations || conversations.length === 0) {
-        return res.status(404).json({ error: 'No conversations found for this user' });
-      }
-  
-      res.status(200).json(conversations);
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-      res.status(500).json({ error: 'An error occurred while fetching messages' });
+    // Validate input
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ 
+        error: 'Messages must be provided as an array' 
+      });
     }
-  });
 
-  
-// POST request to add a message to an existing conversation
-router.post('/conversations/:userId/messages', async (req, res) => {
-    try {
-      const { userId } = req.params;
-      const { messages } = req.body;
-  
-      // Validate the required fields
-    //   if (!Array.isArray(messages) || messages.length === 0) {
-    //     return res.status(400).json({ error: 'Messages array is required and cannot be empty' });
-    //   }
-  
-      // Find the conversation by userId and update its messages array
-      const updatedConversation = await Conversation.findOneAndUpdate(
-        { userId }, // Find the conversation by userId
-        { $set: { messages } }, // Replace the messages array
-        { new: true } // Return the updated document
-      );
-      if (!updatedConversation) {
-        return res.status(404).json({ error: 'Conversation not found for the given userId' });
+    // Find and update or create new conversation
+    const conversation = await Conversation.findOneAndUpdate(
+      { userId },
+      { 
+        messages,
+        lastUpdated: Date.now()
+      },
+      { 
+        upsert: true, // Create if doesn't exist
+        new: true // Return updated document
       }
-  
-      res.status(200).json(updatedConversation);
-    } catch (error) {
-      console.error('Error updating conversation:', error);
-      res.status(500).json({ error: 'An error occurred while updating the messages' });
+    );
+
+    res.status(200).json(conversation.messages);
+  } catch (error) {
+    console.error('Error saving conversation:', error);
+    res.status(500).json({ error: 'Failed to save conversation' });
+  }
+});
+
+// POST to clear conversation messages
+router.post('/conversations/:userId/clear', async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const conversation = await Conversation.findOne({ userId });
+    
+    if (!conversation) {
+      // If no conversation exists, create an empty one
+      const newConversation = new Conversation({ userId, messages: [] });
+      await newConversation.save();
+      return res.status(200).json({ message: 'Conversation cleared (none existed)' });
     }
-  });
-  
-  // POST request to clear the messages of a user
-  router.post('/conversations/:userId/clear', async (req, res) => {
-    try {
-      const { userId } = req.params;
 
-      // Find the conversation by userId and clear its messages array
-      const updatedConversation = await Conversation.findOneAndUpdate(
-        { userId }, // Find the conversation by userId
-        { $set: { messages: [] } }, // Clear the messages array
-        { new: true } // Return the updated document
-      );
+    // Use the schema method we defined
+    await conversation.clearMessages();
+    
+    res.status(200).json({ message: 'Conversation cleared successfully' });
+  } catch (error) {
+    console.error('Error clearing conversation:', error);
+    res.status(500).json({ error: 'Failed to clear conversation' });
+  }
+});
 
-      if (!updatedConversation) {
-        return res.status(404).json({ error: 'Conversation not found for the given userId' });
-      }
+// Remove this route as it's redundant with the new POST /conversations/:userId
+// router.post('/conversations/:userId/messages', ...);
 
-      res.status(200).json(updatedConversation);
-    } catch (error) {
-      console.error('Error clearing messages:', error);
-      res.status(500).json({ error: 'An error occurred while clearing the messages' });
-    }
-  });
-
-  
+// Remove this route as we don't need to create new conversation documents separately
+// router.post('/conversations', ...);
 
 module.exports = router;

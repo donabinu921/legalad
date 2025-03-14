@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import mammoth from "mammoth";
+import ReactMarkdown from "react-markdown"; // Add this import
 import "../styles/DocAnalyser.css";
-import FormattedText from "../components/FormattedText";
 
 // Initialize the Google Generative AI
 const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
@@ -10,7 +10,6 @@ const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
 // Initialize PDF.js
 const initPDFJS = async () => {
   const pdfjs = await import("pdfjs-dist/webpack");
-  // Using CDN for the worker
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
   return pdfjs;
 };
@@ -25,7 +24,6 @@ const DocAnalyser = () => {
   const [pdfjs, setPdfjs] = useState(null);
 
   useEffect(() => {
-    // Initialize PDF.js when component mounts
     initPDFJS().then(setPdfjs).catch(console.error);
   }, []);
 
@@ -211,7 +209,7 @@ const DocAnalyser = () => {
       {fileURL && (
         <div className="grid grid-cols-1 gap-4">
           <div className="border rounded p-4">
-            <h3 className="text-xl font-medium mb-3  text-blue-600">
+            <h3 className="text-xl font-medium mb-3 text-blue-600">
               Uploaded Document
             </h3>
             <iframe
@@ -223,7 +221,7 @@ const DocAnalyser = () => {
 
           {/* {extractedText && (
             <div className="border rounded p-4">
-              <h3 className="text-xl font-medium mb-3  text-blue-600">Extracted Text</h3>
+              <h3 className="text-xl font-medium mb-3 text-blue-600">Extracted Text</h3>
               <div className="prose max-w-none whitespace-pre-wrap">
                 {extractedText}
               </div>
@@ -239,8 +237,11 @@ const DocAnalyser = () => {
                 <div className="flex items-center justify-center h-32">
                   <p>Analyzing document...</p>
                 </div>
-              ) : (<FormattedText text = {analysisResult}/>) || "Analysis results will appear here after processing."
-              }
+              ) : analysisResult ? (
+                <ReactMarkdown>{analysisResult}</ReactMarkdown> // Replace FormattedText with ReactMarkdown
+              ) : (
+                "Analysis results will appear here after processing."
+              )}
             </div>
           </div>
         </div>

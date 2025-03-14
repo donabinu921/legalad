@@ -4,7 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const chatRoutes = require('./routes/chat.js');
-const chat2Routes = require('./routes/chat2.js'); 
+// const chat2Routes = require('./routes/chat2.js'); 
 
 dotenv.config(); // Load environment variables
 
@@ -17,7 +17,7 @@ app.use(express.json());
 // Routes
 app.use('/api', chatRoutes);
 app.use('/api', authRoutes);
-app.use('/api', chat2Routes);
+// app.use('/api', chat2Routes);
 
 // Connect to MongoDB and start server
 const PORT = process.env.PORT || 5000;
