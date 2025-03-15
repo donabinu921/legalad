@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from "axios";
-import ReactMarkdown from 'react-markdown'; // Add this import
+import ReactMarkdown from 'react-markdown';
 
 const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_API_KEY || "");
 
