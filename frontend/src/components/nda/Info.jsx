@@ -6,11 +6,13 @@ const Info = ({ formData, handleChange }) => {
     "Customer Data",
     "Services Provided",
     "Intellectual Property",
-    "Products and Processes",
+    "Product Information",
+    "Production Processes",
     "Accounting and Finances",
     "Marketing and Development",
     "Computer Technology and Security",
-  ];
+    "Third Party Information"
+];
 
   return (
     <div className="space-y-4">
