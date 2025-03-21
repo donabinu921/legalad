@@ -11,7 +11,18 @@ import Witness from "./nda/Witness";
 const NDA = ({ setSystemInstruction, sendToGemini }) => {
   const [formData, setFormData] = useState({
     dateOfDrafting: new Date().toISOString().split("T")[0],
-    confidentialInformation:[],
+    confidentialInformation:[
+      "Business Operations",
+      "Customer Data",
+      "Services Provided",
+      "Intellectual Property",
+      "Product Information",
+      "Production Processes",
+      "Accounting and Finances",
+      "Marketing and Development",
+      "Computer Technology and Security",
+      "Third Party Information"
+  ],
     disclosingPartyName: "",
     disclosingPartyAddress: "",
     receivingPartyName: "",
