@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { jsPDF } from "jspdf";
+import html2pdf from "html2pdf.js"; // Import html2pdf.js
 import ReactMarkdown from "react-markdown";
 import Will from "../components/Will";
 import Lease from "../components/Lease";
@@ -10,6 +10,7 @@ import Partnership from "../components/Partnership";
 import "react-toastify/dist/ReactToastify.css";
 import { FaArrowLeft } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
+import { marked } from "marked";  
 
 const DocDrafter = () => {
   const [clicked, setClicked] = useState(false);
@@ -72,86 +73,41 @@ const DocDrafter = () => {
     setTextAreaValue(e.target.value);
   };
 
+
+
   const generatePDF = () => {
-    const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
-
-    // Set margins and initial position
-    const margin = 15;
-    let y = margin;
-
-    // Helper function to check page overflow and add new page if needed
-    const checkPageOverflow = (additionalHeight) => {
-      const pageHeight = doc.internal.pageSize.height;
-      if (y + additionalHeight > pageHeight - margin) {
-        doc.addPage();
-        y = margin;
-      }
+    const element = document.createElement("div");
+    document.body.appendChild(element);
+  
+    // Convert Markdown to HTML if needed
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto;">
+        ${marked.parse(textAreaValue)} <!-- Convert Markdown to HTML -->
+      </div>
+    `;
+    element.innerHTML = htmlContent;
+  
+    const opt = {
+      margin: 10,
+      filename: `${page || "document"}.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
-
-    // Title
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
-    doc.text("LAST WILL AND TESTAMENT OF AMITH SUNIL", 105, y, { align: "center" });
-    y += 10;
-
-    // Date and Place
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.text("Date: 24th March 2025", margin, y);
-    y += 7;
-    doc.text("Place: Payyapilly kadavil, Koduvazhanga, Neericode P.O., Alangad", margin, y);
-    y += 10;
-
-    // Sections
-    const sections = textAreaValue.split("\n\n"); // Split by double newline for paragraphs
-    sections.forEach((section) => {
-      const lines = section.split("\n");
-      lines.forEach((line) => {
-        if (line.match(/^\*\*\d\./)) {
-          // Heading (e.g., **1. Declaration**)
-          checkPageOverflow(10);
-          doc.setFontSize(14);
-          doc.setFont("helvetica", "bold");
-          doc.text(line.replace(/\*\*/g, ""), margin, y);
-          y += 8;
-        } else if (line.trim()) {
-          // Regular text
-          checkPageOverflow(20);
-          doc.setFontSize(12);
-          doc.setFont("helvetica", "normal");
-          const splitText = doc.splitTextToSize(line.replace(/\*\*/g, ""), 180);
-          splitText.forEach((textLine) => {
-            checkPageOverflow(7);
-            doc.text(textLine, margin, y);
-            y += 7;
-          });
-        }
+  
+    html2pdf()
+      .set(opt)
+      .from(element)
+      .save()
+      .then(() => {
+        document.body.removeChild(element);
+      })
+      .catch((error) => {
+        console.error("PDF generation error:", error);
+        toast.error("Failed to generate PDF.");
+        document.body.removeChild(element);
       });
-      y += 5; // Space between sections
-    });
-
-    // Signature placeholders (assuming they come at the end)
-    checkPageOverflow(40);
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
-    doc.text("Signed by Amith Sunil ____________________________", margin, y);
-    y += 20;
-    doc.text("Witness: ____________________________", margin, y);
-    y += 7;
-    doc.text("Hari", margin, y);
-    y += 7;
-    doc.text("Address: Abc", margin, y);
-
-    // Output the PDF
-    const pdfBlob = doc.output("blob");
-    const pdfUrl = URL.createObjectURL(pdfBlob);
-    window.open(pdfUrl);
   };
-
   const onButtonClick = (documentName) => {
     setClicked(true);
     setPage(documentName);
@@ -251,9 +207,9 @@ const DocDrafter = () => {
             <h2 className="text-blue-600 text-xl font-medium mb-4">
               Generated Document
             </h2>
-            <div className="border p-4 rounded w-full mb-4 bg-white">
+            {/* <div className="border p-4 rounded w-full mb-4 bg-white">
               <ReactMarkdown>{response}</ReactMarkdown>
-            </div>
+            </div> */}
             <textarea
               value={textAreaValue}
               onChange={handleTextAreaChange}
