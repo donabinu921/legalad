@@ -27,7 +27,7 @@ const DocDrafter = () => {
     try {
       const model = genAI.getGenerativeModel({
         model: "tunedModels/docdrafter-2zl52xcby2vh",
-        systemInstruction: systemInstruction,
+        // systemInstruction: systemInstruction,
         generationConfig: {
           temperature: 1,
           topP: 0.95,

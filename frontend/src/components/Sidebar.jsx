@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaHome, FaFileAlt, FaFileSignature, FaRobot, FaSignOutAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaHome, FaFileAlt, FaFileSignature, FaRobot, FaSignOutAlt, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
 
 const Sidebar = ({ onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -29,7 +29,7 @@ const Sidebar = ({ onLogout }) => {
           { path: '/document-drafter', label: 'Document Drafter', icon: <FaFileAlt /> },
           { path: '/document-analyser', label: 'Document Analyser', icon: <FaFileSignature /> },
           { path: '/chatbot', label: 'Legal Chatbot', icon: <FaRobot /> },
-          { path: '/law-lookup', label: 'Case Lookup', icon: <FaFileAlt /> },
+          { path: '/law-lookup', label: 'Legal Lookup', icon: <FaSearch /> },
         ].map((tab) => (
           <li
             key={tab.path}

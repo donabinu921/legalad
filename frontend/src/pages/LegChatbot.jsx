@@ -180,18 +180,18 @@ const LegChatbot = () => {
             <div style={{
               fontWeight: "600",
               marginBottom: "0.5rem",
-              color: message.role === "user" ? "#2563eb" : "#059669",
+              color: message.role === "user" ? "#2563eb" : "#0a0a0a",
             }}>
               {message.role === "user" ? "Your Query:" : "Legal Advisor:"}
             </div>
             <div style={{
               padding: "0.75rem",
               borderRadius: "0.5rem",
-              backgroundColor: message.role === "user" ? "#eff6ff" : "#f0fdf4",
-              border: `1px solid ${message.role === "user" ? "#bfdbfe" : "#bbf7d0"}`,
+              backgroundColor: message.role === "user" ? "#eff6ff" : "#ffffff", // Changed assistant background to white
+              border: `1px solid ${message.role === "user" ? "#bfdbfe" : "#ddd"}`, // Changed assistant border to light gray
               whiteSpace: "pre-wrap",
             }}>
-              <ReactMarkdown>{message.content}</ReactMarkdown> {/* Replace plain text with ReactMarkdown */}
+              <ReactMarkdown>{message.content}</ReactMarkdown>
             </div>
           </div>
         ))}
@@ -203,8 +203,8 @@ const LegChatbot = () => {
             <div style={{
               padding: "0.75rem",
               borderRadius: "0.5rem",
-              backgroundColor: "#f0fdf4",
-              border: "1px solid #bbf7d0",
+              backgroundColor: "#ffffff", // Changed loading background to white
+              border: "1px solid #ddd", // Changed loading border to light gray
             }}>
               Typing...
             </div>
