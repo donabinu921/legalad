@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { jsPDF } from "jspdf";
-import ReactMarkdown from "react-markdown"; // Add this import
+import ReactMarkdown from "react-markdown";
 import Will from "../components/Will";
 import Lease from "../components/Lease";
 import Divorce from "../components/Divorce";
@@ -19,15 +19,12 @@ const DocDrafter = () => {
   const [textAreaValue, setTextAreaValue] = useState("");
 
   // GEMINI SECTION
-  const genAI = new GoogleGenerativeAI(
-    `${process.env.REACT_APP_GEMINI_API_KEY}`
-  );
+  const genAI = new GoogleGenerativeAI(`${process.env.REACT_APP_GEMINI_API_KEY}`);
 
   const sendToGemini = async (message) => {
     try {
       const model = genAI.getGenerativeModel({
         model: "tunedModels/docdrafter-2zl52xcby2vh",
-        // systemInstruction: systemInstruction,
         generationConfig: {
           temperature: 1,
           topP: 0.95,
@@ -76,24 +73,80 @@ const DocDrafter = () => {
   };
 
   const generatePDF = () => {
-    const doc = new jsPDF();
-    doc.setFontSize(10);
-    const pageHeight = doc.internal.pageSize.height;
-    const margin = 10;
-    const maxLineHeight = pageHeight - margin * 2;
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    // Set margins and initial position
+    const margin = 15;
     let y = margin;
 
-    const lines = doc.splitTextToSize(textAreaValue, 180);
-
-    lines.forEach((line) => {
-      if (y + 10 > maxLineHeight) {
+    // Helper function to check page overflow and add new page if needed
+    const checkPageOverflow = (additionalHeight) => {
+      const pageHeight = doc.internal.pageSize.height;
+      if (y + additionalHeight > pageHeight - margin) {
         doc.addPage();
         y = margin;
       }
-      doc.text(line, margin, y);
-      y += 10;
+    };
+
+    // Title
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("LAST WILL AND TESTAMENT OF AMITH SUNIL", 105, y, { align: "center" });
+    y += 10;
+
+    // Date and Place
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text("Date: 24th March 2025", margin, y);
+    y += 7;
+    doc.text("Place: Payyapilly kadavil, Koduvazhanga, Neericode P.O., Alangad", margin, y);
+    y += 10;
+
+    // Sections
+    const sections = textAreaValue.split("\n\n"); // Split by double newline for paragraphs
+    sections.forEach((section) => {
+      const lines = section.split("\n");
+      lines.forEach((line) => {
+        if (line.match(/^\*\*\d\./)) {
+          // Heading (e.g., **1. Declaration**)
+          checkPageOverflow(10);
+          doc.setFontSize(14);
+          doc.setFont("helvetica", "bold");
+          doc.text(line.replace(/\*\*/g, ""), margin, y);
+          y += 8;
+        } else if (line.trim()) {
+          // Regular text
+          checkPageOverflow(20);
+          doc.setFontSize(12);
+          doc.setFont("helvetica", "normal");
+          const splitText = doc.splitTextToSize(line.replace(/\*\*/g, ""), 180);
+          splitText.forEach((textLine) => {
+            checkPageOverflow(7);
+            doc.text(textLine, margin, y);
+            y += 7;
+          });
+        }
+      });
+      y += 5; // Space between sections
     });
 
+    // Signature placeholders (assuming they come at the end)
+    checkPageOverflow(40);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text("Signed by Amith Sunil ____________________________", margin, y);
+    y += 20;
+    doc.text("Witness: ____________________________", margin, y);
+    y += 7;
+    doc.text("Hari", margin, y);
+    y += 7;
+    doc.text("Address: Abc", margin, y);
+
+    // Output the PDF
     const pdfBlob = doc.output("blob");
     const pdfUrl = URL.createObjectURL(pdfBlob);
     window.open(pdfUrl);
@@ -106,7 +159,7 @@ const DocDrafter = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <ToastContainer /> {/* Add this to display toasts */}
+      <ToastContainer />
       {!clicked && (
         <div>
           <h1 className="text-blue-600 text-2xl mb-12 text-center font-bold">
@@ -153,7 +206,7 @@ const DocDrafter = () => {
               className="px-5 py-3 text-base font-medium border-2 border-white bg-blue-600 text-white rounded transition hover:text-gray-900 hover:bg-white hover:border-blue-600"
               onClick={() => {
                 setClicked(false);
-                setResponse(""); // Changed from false to "" to match string type
+                setResponse("");
               }}
             >
               <FaArrowLeft />
@@ -198,11 +251,9 @@ const DocDrafter = () => {
             <h2 className="text-blue-600 text-xl font-medium mb-4">
               Generated Document
             </h2>
-            {/* Display formatted markdown */}
             <div className="border p-4 rounded w-full mb-4 bg-white">
               <ReactMarkdown>{response}</ReactMarkdown>
             </div>
-            {/* Optional: Keep textarea for editing */}
             <textarea
               value={textAreaValue}
               onChange={handleTextAreaChange}
