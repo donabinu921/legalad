@@ -55,7 +55,7 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
     } else if (formData.hasChildren === "no" && formData.children.length > 0) {
       setFormData((prev) => ({ ...prev, children: [] }));
     }
-  }, [formData.hasChildren]);
+  }, [formData.hasChildren, formData.children]);
 
   useEffect(() => {
     if (formData.hasSiblings === "yes" && formData.siblings.length === 0) {
@@ -63,7 +63,7 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
     } else if (formData.hasSiblings === "no" && formData.siblings.length > 0) {
       setFormData((prev) => ({ ...prev, siblings: [] }));
     }
-  }, [formData.hasSiblings]);
+  }, [formData.hasSiblings, formData.siblings]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
