@@ -49,6 +49,22 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
     charitableDonations: [{ organization: "", amount: "" }],
   });
 
+  useEffect(() => {
+    if (formData.hasChildren === "yes" && formData.children.length === 0) {
+      addArrayItem("children", { name: "", dateOfBirth: "" });
+    } else if (formData.hasChildren === "no" && formData.children.length > 0) {
+      setFormData((prev) => ({ ...prev, children: [] }));
+    }
+  }, [formData.hasChildren]);
+
+  useEffect(() => {
+    if (formData.hasSiblings === "yes" && formData.siblings.length === 0) {
+      addArrayItem("siblings", { name: "", relation: "" });
+    } else if (formData.hasSiblings === "no" && formData.siblings.length > 0) {
+      setFormData((prev) => ({ ...prev, siblings: [] }));
+    }
+  }, [formData.hasSiblings]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -254,13 +270,17 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
                     className="border p-2 rounded flex-1"
                     required
                   />
-                  <button
-                    type="button"
-                    onClick={() => deleteArrayItem("children", index)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    &#x2715;
-                  </button>
+                  {
+              formData.children.length>1 && (
+              <button
+                type="button"
+                onClick={() => deleteArrayItem("children", index)}
+                className="text-red-600 hover:text-red-800"
+              >
+                &#x2715;
+              </button>
+                )
+              }
                 </div>
               ))}
               <button
@@ -356,13 +376,15 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
                     className="border p-2 rounded flex-1"
                     required
                   />
-                  <button
-                    type="button"
-                    onClick={() => deleteArrayItem("siblings", index)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    &#x2715;
-                  </button>
+                  {formData.siblings.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => deleteArrayItem("siblings", index)}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  ✕
+                </button>
+              )}
                 </div>
               ))}
               <button
@@ -433,74 +455,62 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
           </h2>
           <h3 className="font-medium mb-2">Beneficiaries</h3>
           {formData.beneficiaries.map((beneficiary, index) => (
-            <div key={index} className="flex items-center gap-4 mb-4">
-              <input
-                type="text"
-                placeholder="Beneficiary Name"
-                value={beneficiary.name}
-                onChange={(e) =>
-                  handleArrayChange(
-                    "beneficiaries",
-                    index,
-                    "name",
-                    e.target.value
-                  )
-                }
-                className="border p-2 rounded flex-1"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Relation"
-                value={beneficiary.relation}
-                onChange={(e) =>
-                  handleArrayChange(
-                    "beneficiaries",
-                    index,
-                    "relation",
-                    e.target.value
-                  )
-                }
-                className="border p-2 rounded flex-1"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Share (%)"
-                value={beneficiary.share}
-                onChange={(e) =>
-                  handleArrayChange(
-                    "beneficiaries",
-                    index,
-                    "share",
-                    e.target.value
-                  )
-                }
-                className="border p-2 rounded w-24"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => deleteArrayItem("beneficiaries", index)}
-                className="text-red-600 hover:text-red-800"
-              >
-                &#x2715;
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() =>
-              addArrayItem("beneficiaries", {
-                name: "",
-                relation: "",
-                share: "",
-              })
-            }
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 transition mb-4"
-          >
-            Add Beneficiary
-          </button>
+  <div key={index} className="flex items-center gap-4 mb-4">
+    <input
+      type="text"
+      placeholder="Beneficiary Name"
+      value={beneficiary.name}
+      onChange={(e) =>
+        handleArrayChange("beneficiaries", index, "name", e.target.value)
+      }
+      className="border p-2 rounded flex-1"
+      required
+    />
+    <input
+      type="text"
+      placeholder="Relation"
+      value={beneficiary.relation}
+      onChange={(e) =>
+        handleArrayChange("beneficiaries", index, "relation", e.target.value)
+      }
+      className="border p-2 rounded flex-1"
+      required
+    />
+    <input
+      type="text"
+      placeholder="Share (%)"
+      value={beneficiary.share}
+      onChange={(e) =>
+        handleArrayChange("beneficiaries", index, "share", e.target.value)
+      }
+      className="border p-2 rounded w-24"
+      required
+    />
+    {/* Conditionally render the delete button only if there is more than one beneficiary */}
+    {formData.beneficiaries.length > 1 && (
+      <button
+        type="button"
+        onClick={() => deleteArrayItem("beneficiaries", index)}
+        className="text-red-600 hover:text-red-800"
+      >
+        ✕
+      </button>
+    )}
+  </div>
+))}
+<button
+  type="button"
+  onClick={() =>
+    addArrayItem("beneficiaries", {
+      name: "",
+      relation: "",
+      share: "",
+    })
+  }
+  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800 transition mb-4"
+>
+  Add Beneficiary
+</button>
 
           <h3 className="font-medium mb-2">Specific Bequests</h3>
           {formData.specificBequests.map((bequest, index) => (
@@ -533,6 +543,8 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
                 }
                 className="border p-2 rounded flex-1"
               />
+              {
+                formData.specificBequests.length>1 && (
               <button
                 type="button"
                 onClick={() => deleteArrayItem("specificBequests", index)}
@@ -540,6 +552,9 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
               >
                 &#x2715;
               </button>
+                )
+              }
+              
             </div>
           ))}
           <button
@@ -599,6 +614,8 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
                 }
                 className="border p-2 rounded flex-1"
               />
+              {
+                formData.debts.length>1 && (
               <button
                 type="button"
                 onClick={() => deleteArrayItem("debts", index)}
@@ -606,6 +623,8 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
               >
                 &#x2715;
               </button>
+                )
+              }
             </div>
           ))}
           <button
@@ -668,6 +687,8 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
                 className="border p-2 rounded flex-1"
                 required
               />
+              {
+                formData.witnesses.length>1 && (
               <button
                 type="button"
                 onClick={() => deleteArrayItem("witnesses", index)}
@@ -675,6 +696,8 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
               >
                 &#x2715;
               </button>
+                )
+              }
             </div>
           ))}
           <button
@@ -738,6 +761,8 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
                 }
                 className="border p-2 rounded w-32"
               />
+              {
+                formData.charitableDonations.length>1 && (
               <button
                 type="button"
                 onClick={() => deleteArrayItem("charitableDonations", index)}
@@ -745,6 +770,8 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
               >
                 &#x2715;
               </button>
+                )
+              }
             </div>
           ))}
           <button
@@ -768,7 +795,7 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
             onSubmit={handleSubmit}
             className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-800 transition"
           >
-            Save Will
+            Generate Will
           </button>
         </div>
       </form>
