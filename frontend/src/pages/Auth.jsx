@@ -24,11 +24,11 @@ const Auth = ({ onAuthSuccess }) => {
     const url = isLogin ? 'http://localhost:5000/api/login' : 'http://localhost:5000/api/signup';
     try {
       const response = await axios.post(url, formData);
-      const { message, token } = response.data; // Destructure token and message
+      const { message } = response.data; 
       console.log('Response:', response.data);
   
       if (isLogin) {
-        window.localStorage.setItem("USER", response.data.userId); // Store token in localStorage
+        window.localStorage.setItem("USER", response.data.userId); 
         toast.success(`${message}, Logging you in...`);
       } else {
         toast.success(`${message}, You can now log in!`);
@@ -36,8 +36,8 @@ const Auth = ({ onAuthSuccess }) => {
   
       
       setTimeout(() => {
-        onAuthSuccess(); // Redirect or perform your action
-      }, 1000); // Delay for 1 second
+        onAuthSuccess(); 
+      }, 1000); 
 
     } catch (error) {
       if (error.response) {

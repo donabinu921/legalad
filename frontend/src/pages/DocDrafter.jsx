@@ -25,7 +25,7 @@ const DocDrafter = () => {
   const sendToGemini = async (message) => {
     try {
       const model = genAI.getGenerativeModel({
-        model: "tunedModels/docdrafter-2zl52xcby2vh",
+        model: "tunedModels/docdrafterfinal-75a25zggnf0h",
         generationConfig: {
           temperature: 1,
           topP: 0.95,
@@ -48,13 +48,45 @@ const DocDrafter = () => {
     }
   };
 
+  const fixMarkdown = async (message) => {
+    try {
+      const model = genAI.getGenerativeModel({
+        model: "gemini-1.5-flash",
+        generationConfig: {
+          temperature: .7,
+          topP: 0.95,
+          topK: 40,
+          maxOutputTokens: 8192,
+          responseMimeType: "text/plain",
+        },
+      });
+
+      const chat = model.startChat({
+        history: [],
+        generationConfig: { temperature: 0.9 },
+      });
+
+      const prompt = `Convert the following text to markdown format. Use Titles and whatever necessary: \n\n${message}`;
+      const result = await chat.sendMessage(prompt);
+      return result.response.text();
+    } catch (error) {
+      console.error("Gemini API Error:", error);
+      throw error;
+    }
+  };
+
   const Submit = async (message) => {
     toast.info("Generating document...");
 
     try {
       const result = await sendToGemini(message);
-      setResponse(result);
-      console.log(result);
+      
+      
+      
+     const res = await fixMarkdown(result); 
+      
+      setResponse(res);
+      console.log(res);
     } catch (error) {
       console.error("Error:", error);
       setResponse("An error occurred while fetching the response.");
