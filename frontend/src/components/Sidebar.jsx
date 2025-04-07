@@ -12,8 +12,6 @@ const Sidebar = ({ onLogout }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    console.log('Token removed:', localStorage.getItem('token')); // Should be null
     onLogout();
     navigate('/auth');
   };
@@ -29,7 +27,7 @@ const Sidebar = ({ onLogout }) => {
           { path: '/document-drafter', label: 'Document Drafter', icon: <FaFileAlt /> },
           { path: '/document-analyser', label: 'Document Analyser', icon: <FaFileSignature /> },
           { path: '/chatbot', label: 'Legal Chatbot', icon: <FaRobot /> },
-          { path: '/law-lookup', label: 'Legal Lookup', icon: <FaSearch /> },
+          // { path: '/law-lookup', label: 'Legal Lookup', icon: <FaSearch /> },
         ].map((tab) => (
           <li
             key={tab.path}
