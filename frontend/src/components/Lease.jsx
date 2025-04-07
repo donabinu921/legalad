@@ -47,7 +47,6 @@ const Lease = ({ setSystemInstruction, sendToGemini }) => {
     }));
   };
 
-  // Special handler for array-based fields (utilities)
   const handleUtilitiesChange = (name, values) => {
     setFormData((prevState) => ({
       ...prevState,

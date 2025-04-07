@@ -61,13 +61,13 @@ const Divorce = ({ setSystemInstruction, sendToGemini }) => {
         return {
           ...prevState,
           confidentialInformation: checked
-            ? [...prevState.confidentialInformation, value] // Add to array
+            ? [...prevState.confidentialInformation, value]  
             : prevState.confidentialInformation.filter(
                 (item) => item !== value
-              ), // Remove from array
+              ),  
         };
       }
-      return { ...prevState, [name]: value }; // Handle text inputs
+      return { ...prevState, [name]: value };
     });
   };
 

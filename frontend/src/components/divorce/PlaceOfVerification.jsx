@@ -1,6 +1,5 @@
 import React from 'react';
 
-// List of Family Court locations in Kerala (sorted alphabetically)
 const familyCourtLocations = [
   "Alappuzha",
   "Aluva",

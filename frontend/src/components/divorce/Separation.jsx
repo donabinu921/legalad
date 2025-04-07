@@ -18,7 +18,7 @@ const Separation = ({ formData, handleChange }) => (
   value={formData.separationDate}
   className="border p-2 rounded mb-4 w-full"
   onChange={handleChange}
-  max={new Date().toISOString().split("T")[0]} // Sets max to current date
+  max={new Date().toISOString().split("T")[0]}  
 />
     </div>
   </div>

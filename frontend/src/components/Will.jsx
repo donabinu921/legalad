@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { jsPDF } from "jspdf";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,40 +9,22 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
     testatorAddress: "",
     dateOfBirth: "",
     aadhaarNumber: "",
-
-    // Marital Status
     maritalStatus: "single",
     spouseName: "",
-
-    // Children Status
     hasChildren: "no",
     children: [],
-
-    // Family Details
     parents: { father: "", mother: "" },
     hasSiblings: "no",
     siblings: [],
-
-    // Executor Details
     executorName: "",
     executorAddress: "",
     alternateExecutorName: "",
     alternateExecutorAddress: "",
-
-    // Beneficiaries and Bequests
     beneficiaries: [{ name: "", relation: "", share: "" }],
     specificBequests: [{ item: "", recipient: "" }],
-
-    // Debts
     debts: [{ institution: "", amount: "", instructions: "" }],
-
-    // Guardianship
     guardianshipDetails: "",
-
-    // Witnesses
     witnesses: [{ name: "", address: "" }],
-
-    // Other Instructions
     funeralPreferences: "",
     charitableDonations: [{ organization: "", amount: "" }],
   });
@@ -68,24 +48,18 @@ const Will = ({ setSystemInstruction, sendToGemini }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-
-    // Reset children array when hasChildren changes to 'no'
     if (name === "hasChildren" && value === "no") {
       setFormData((prev) => ({ ...prev, children: [] }));
     }
-
-    // Reset siblings array when hasSiblings changes to 'no'
     if (name === "hasSiblings" && value === "no") {
       setFormData((prev) => ({ ...prev, siblings: [] }));
     }
-    // console.log(formData);
   };
 
   const handleArrayChange = (category, index, field, value) => {
     const updatedArray = [...formData[category]];
     updatedArray[index][field] = value;
     setFormData({ ...formData, [category]: updatedArray });
-    // console.log(formData);
   };
 
   const addArrayItem = (category, template) => {
