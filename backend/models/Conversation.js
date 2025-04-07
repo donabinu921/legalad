@@ -1,57 +1,54 @@
 const mongoose = require('mongoose');
 
-// Define the schema for the message object
 const MessageSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['user', 'assistant'],
-    required: true // Make role required
+    required: true 
   },
   content: {
     type: String,
-    required: true, // Make content required
-    trim: true // Remove unnecessary whitespace
+    required: true, 
+    trim: true  
   },
   timestamp: {
     type: Date,
-    default: Date.now, // Add timestamp for each message
+    default: Date.now,  
     required: true
   }
-}, { _id: true }); // Ensure each message has its own _id
+}, { _id: true });  
 
-// Define the schema for the conversation object
+ 
 const ConversationSchema = new mongoose.Schema({
   userId: {
-    type: String, // Changed to String to match your localStorage USER
+    type: String,  
     required: true,
-    index: true // Add index for faster queries by userId
+    index: true  
   },
   messages: {
     type: [MessageSchema],
-    default: [] // Ensure messages array is initialized
+    default: []  
   },
   lastUpdated: {
     type: Date,
-    default: Date.now // Track last update time
+    default: Date.now  
   }
 }, { 
   timestamps: true,
-  toJSON: { virtuals: true } // Include virtuals when converting to JSON
+  toJSON: { virtuals: true }  
 });
 
-// Add virtual to get message count
+
 ConversationSchema.virtual('messageCount').get(function() {
   return this.messages.length;
 });
 
-// Add method to clear messages
 ConversationSchema.methods.clearMessages = async function() {
   this.messages = [];
   this.lastUpdated = Date.now();
   return await this.save();
 };
 
-// Add index for better query performance
 ConversationSchema.index({ userId: 1, lastUpdated: -1 });
 
 module.exports = mongoose.model('Conversation', ConversationSchema);

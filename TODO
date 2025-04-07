@@ -1,69 +1,7 @@
 # TODO List
 
-3 more document templates
-lease legal Format
-width issue
 
-chatbot finetuning
-chatbot for lawyers
-
-
-MAJOR FIXes
-dona - Model Dataset
-CHatbot proper memory.
+https://huggingface.co/yash-lulla/Legal_AI_Assistant
 
 
 
-
-
-
-
-// LEASE
-
-const [formData, setFormData] = useState({
-    // I. Parties and Property:
-    landlordName: "",
-    landlordAddress: "",
-    tenantName: "",
-    tenantAddress: "",
-    propertyAddress: "",
-    propertyType: "",  // (Apartment, House, Condo, etc.)
-
-    // II. Lease Term and Rent:
-    leaseStartDate: "",
-    leaseEndDate: "",
-    monthlyRent: "",
-    rentDueDay: "", //Day of the month rent is due
-    lateFeeGracePeriod: "", // Number of days before late fee applies
-    lateFeeAmount: "",
-    additionalDailyLateFee: "", //If there is an amount that increases daily after late fee applies
-
-    // III. Security Deposit:
-    securityDepositAmount: "",
-
-    // IV. Utilities and Services:
-    landlordUtilitiesResponsibility: [], //Array of utilities landlord is responsible for (Water, Sewer, Garbage, etc.)
-    tenantUtilitiesResponsibility: [], //Array of utilities tenant is responsible for
-
-    // V. Pet Policy:
-    arePetsAllowed: false, //Boolean whether pets are allowed
-    petRestrictions: "",
-
-    // Additional Clauses
-    alterationsAllowed: false, //are alternations allowed on the property
-
-
-    // VIII. Dates
-    dateOfAgreement: new Date().toISOString().split("T")[0],
-    leaseDeedStart: new Date().toISOString().split("T")[0],
-    leaseDeedSigning: new Date().toISOString().split("T")[0],
-
-    //Witness
-    witnessName: "",
-    witnessAddress: "",
-    addWitnessName: "",
-    addWitnessAddress: "",
-
-    // IX. Additional
-    additionalTerms: "",
-  });
